@@ -5,10 +5,10 @@
     display: flex;
     gap: 3px;
     flex-wrap: wrap;
-    margin-left: 800px;
+    margin-left: 50px;
 }
 
-[class*='grid-droppable'] {
+[id*='grid-droppable'] {
     background-color: #ff0000; /* EDEDED */
     width: 100px;
     height: 100px;

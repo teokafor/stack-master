@@ -5,10 +5,12 @@ import { Draggable } from './Components/Draggable';
 import { Droppable } from './Components/Droppable';
 import { GridCell } from './Components/GridCell';
 
+
+// Build an empty array to represent grid cells
+const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
+
 function App() {
   const [parent, setParent] = useState(null);
-
-  const containers = ['grid-droppable-1', 'grid-droppable-2', 'grid-droppable-3'];
 
   const draggableMarkup = (
     <Draggable id='draggable'>Drag me</Draggable>
@@ -18,11 +20,16 @@ function App() {
     <DndContext onDragEnd={handleDragEnd}>
       {parent === null ? draggableMarkup : null}
 
-      {containers.map((id) => (
-        <GridCell id={id} key={id}>
-          {parent === id ? draggableMarkup : 'test'}
-        </GridCell>
-      ))}
+      {
+        <div className="grid-bg">
+        {containers.map((id) => (
+          <GridCell id={id} key={id}>
+            {parent === id ? draggableMarkup : 'test'}
+          </GridCell>
+          ))}
+        </div>
+      }
+      
     </DndContext>
   );
   

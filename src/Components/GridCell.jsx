@@ -7,7 +7,7 @@ function GridCell(props) {
   const style = {backgroundColor: isOver ? 'green' : undefined};
   
   return (
-    <div ref={setNodeRef} style={style} className='grid-droppable'>
+    <div ref={setNodeRef} style={style} id={props.id}>
         {props.children}
     </div>
   );
