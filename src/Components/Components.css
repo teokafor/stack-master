@@ -14,3 +14,9 @@
     height: 100px;
     flex-shrink: 0;
 }
+
+
+div {
+    user-select: none;
+    touch-action: none;
+}

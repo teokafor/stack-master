@@ -1,43 +1,63 @@
 import React, {useState} from 'react';
-import {DndContext} from '@dnd-kit/core';
+import {DndContext, DragOverlay} from '@dnd-kit/core';
 
 import { Draggable } from './Components/Draggable';
 import { GridCell } from './Components/GridCell';
 
 
-// Build an empty array to represent grid cells
+import { Item } from './Item';
+
+// Build an empty 5x5 array to represent grid cells
 const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
 
 function App() {
+  const [activeId, setActiveId] = useState(null);
+
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
-  const cardA = (<Draggable id='active-card-a'>Card A</Draggable>);
-  const cardB = (<Draggable id='active-card-b'>Card B</Draggable>);
-  
+
+  // Check if both cards belong to a parent (i.e., a droppable.)
+  const isDraggable = (cardAParent === null || cardBParent === null) ? false : true;
+
+  // TODO: Refactor rendered card into its own component.
+  const cardA = <Draggable id='active-card-a' disabled={isDraggable}>{activeId === 'active-card-a' ? <>{`Item ASTATIC SELECTED`}</> : <>{`Item ASTATIC BASESTATE`}</>}</Draggable>
+  const cardB = <Draggable id='active-card-b' disabled={isDraggable}>{activeId === 'active-card-b' ? <>{`Item BSTATIC SELECTED`}</> : <>{`Item BSTATIC BASESTATE`}</>}</Draggable>
+
   return (
-    <DndContext onDragEnd={handleDragEnd}>
-      {/* Move the card to the top if not related to a grid cell. */}
-      {cardAParent === null ? cardA : null} 
-      {cardBParent === null ? cardB : null}
-      {
-        <div className="grid-bg">
-        {containers.map((id) => (
-          <GridCell id={id} key={id}>
-            {/* Add draggable to matching element from drag end. */}
-            {cardAParent === id ? cardA : null} 
-            {cardBParent === id ? cardB : null}
-          </GridCell>
-          ))}
-        </div>
-      }
-      
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    {/* Move the card to the top if not related to a grid cell. */}
+    {cardAParent === null ? cardA : null}
+    {cardBParent === null ? cardB : null}
+
+    <div className="grid-bg">{
+    // Populate grid
+    containers.map((id) => (
+    <GridCell id={id} key={id}>
+        {/* Make card child of grid cell from drag end. */}
+        {cardAParent === id ? cardA : null}
+        {cardBParent === id ? cardB : null}
+        </GridCell>))
+        
+    }</div>
+
+    {/* Handle live movement of cards */}
+    <DragOverlay>
+        {/* TOOD: Refactor rendered card into its own component. */}
+        {activeId === 'active-card-a' ? <Item value={`Item ASTATIC DRAGSTATE`} /> : <Item value={`Item BSTATIC DRAGSTATE`} />}
+        </DragOverlay>
     </DndContext>
   );
   
+
+  function handleDragStart(event) {
+    setActiveId(event.active.id);
+  }
+
   function handleDragEnd(event) {
+    setActiveId(null);
+
     const {over} = event;
     const cardId = event.active.id;
-
     if (cardId === 'active-card-a') setCardAParent(over ? over.id : null);
     else setCardBParent(over ? over.id : null);
   }
