@@ -7,11 +7,10 @@ import { GridCell } from './Components/GridCell';
 
 import { Item } from './Item';
 
-// Build an empty array to represent grid cells
+// Build an empty 5x5 array to represent grid cells
 const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
 
 function App() {
-  const [items] = useState(['active-card-a', 'active-card-b']); // pretty sure this state + the map can be converted into 2 static lines.
   const [activeId, setActiveId] = useState(null);
 
   const [cardAParent, setCardAParent] = useState(null);
@@ -27,6 +26,7 @@ function App() {
     {cardBParent === null ? cardB : null}
 
     <div className="grid-bg">{
+    // Populate grid
     containers.map((id) => (
     <GridCell id={id} key={id}>
         {/* Make card child of grid cell from drag end. */}
