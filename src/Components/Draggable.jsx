@@ -7,8 +7,8 @@ export function Draggable(props) {
   });
   
   return (
-    <li ref={setNodeRef} {...listeners} {...attributes}>
+    <div ref={setNodeRef} {...listeners} {...attributes}>
       {props.children}
-    </li>
+    </div>
   );
 }
