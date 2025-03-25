@@ -16,8 +16,12 @@ function App() {
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
 
-  const cardA = <Draggable id='active-card-a'>{activeId === 'active-card-a' ? <>{`Item ASTATIC SELECTED`}</> : <>{`Item ASTATIC BASESTATE`}</>}</Draggable>
-  const cardB = <Draggable id='active-card-b'>{activeId === 'active-card-b' ? <>{`Item BSTATIC SELECTED`}</> : <>{`Item BSTATIC BASESTATE`}</>}</Draggable>
+  // Check if both cards belong to a parent (i.e., a droppable.)
+  const isDraggable = (cardAParent === null || cardBParent === null) ? false : true;
+
+  // TODO: Refactor rendered card into its own component.
+  const cardA = <Draggable id='active-card-a' disabled={isDraggable}>{activeId === 'active-card-a' ? <>{`Item ASTATIC SELECTED`}</> : <>{`Item ASTATIC BASESTATE`}</>}</Draggable>
+  const cardB = <Draggable id='active-card-b' disabled={isDraggable}>{activeId === 'active-card-b' ? <>{`Item BSTATIC SELECTED`}</> : <>{`Item BSTATIC BASESTATE`}</>}</Draggable>
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -38,6 +42,7 @@ function App() {
 
     {/* Handle live movement of cards */}
     <DragOverlay>
+        {/* TOOD: Refactor rendered card into its own component. */}
         {activeId === 'active-card-a' ? <Item value={`Item ASTATIC DRAGSTATE`} /> : <Item value={`Item BSTATIC DRAGSTATE`} />}
         </DragOverlay>
     </DndContext>
