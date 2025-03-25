@@ -20,8 +20,8 @@ function App() {
   const isDraggable = (cardAParent === null || cardBParent === null) ? false : true;
 
   // TODO: Refactor rendered card into its own component.
-  const cardA = <Draggable id='active-card-a' disabled={isDraggable}>{activeId === 'active-card-a' ? <>{`Item ASTATIC SELECTED`}</> : <>{`Item ASTATIC BASESTATE`}</>}</Draggable>
-  const cardB = <Draggable id='active-card-b' disabled={isDraggable}>{activeId === 'active-card-b' ? <>{`Item BSTATIC SELECTED`}</> : <>{`Item BSTATIC BASESTATE`}</>}</Draggable>
+  const cardA = <Draggable id='active-card-a' disabled={isDraggable}>{activeId === 'active-card-a' ? <Item value={`Item ASTATIC SELECTED`} /> :  <Item value={`Item ASTATIC BASESTATE`} />}</Draggable>
+  const cardB = <Draggable id='active-card-b' disabled={isDraggable}>{activeId === 'active-card-b' ? <Item value={`Item BSTATIC SELECTED`} /> :  <Item value={`Item BSTATIC BASESTATE`} />}</Draggable>
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -43,7 +43,7 @@ function App() {
     {/* Handle live movement of cards */}
     <DragOverlay>
         {/* TOOD: Refactor rendered card into its own component. */}
-        {activeId === 'active-card-a' ? <Item value={`Item ASTATIC DRAGSTATE`} /> : <Item value={`Item BSTATIC DRAGSTATE`} />}
+        {activeId === 'active-card-a' ? <Item value={`Item ASTATIC DRAGSTATE`} isDragging={true} /> : <Item value={'Item BSTATIC DRAGSTATE'} isDragging={true} />}
         </DragOverlay>
     </DndContext>
   );
