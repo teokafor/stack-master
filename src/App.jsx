@@ -15,10 +15,10 @@ function App() {
   const [cardBParent, setCardBParent] = useState(null);
 
   // Check if both cards belong to a parent (i.e., a droppable.)
-  const isDraggable = (cardAParent === null || cardBParent === null) ? false : true;
+  const isDraggable = (cardAParent === null || cardBParent === null) ? true : false;
 
-  const cardA = <Draggable id='active-card-a' disabled={isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
-  const cardB = <Draggable id='active-card-b' disabled={isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
+  const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
+  const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
 
   // Hold the space of the currently placed card 
   const dummyCard = <DummyCard />
@@ -83,6 +83,10 @@ function App() {
 
     let canDropA = true;
     let canDropB = true;
+    let isCardinal = true;
+
+    // Only enforce cardinality rule if other card has been placed.
+    if (cardAParent !== null || cardBParent !== null) isCardinal = checkCardinality(cardId, over.id);
 
     // Only allow assignment of dropped card to container if target container is empty.
     if (over !== null) {
@@ -90,8 +94,17 @@ function App() {
       canDropB = (over.id !== cardAParent) ? true : false;
     }
     
-    if (cardId === 'active-card-a') setCardAParent(over && canDropA ? over.id : null);
-    else setCardBParent(over && canDropB ? over.id : null);
+    if (cardId === 'active-card-a') setCardAParent(over && canDropA && isCardinal ? over.id : null);
+    else setCardBParent(over && canDropB && isCardinal ? over.id : null);
+  }
+
+
+  function checkCardinality(cardId, currentContainer) {
+    let otherContainer = cardId === 'active-card-a' ? cardBParent : cardAParent; // Get container of already placed card.
+    let containerId = Number(otherContainer.split('-').reverse()[0]); // Grab id of already placed card.
+    let validContainers = [containerId - 5, containerId - 1, containerId + 1, containerId + 5]; // Create array of legal positions based on already placed card.
+    validContainers = validContainers.filter((n) => n >= 0 && n <= 24).map((item) => 'grid-droppable-' + item); // Remove OOB positions and format id.
+    return validContainers.includes(currentContainer) ? true : false; // Return true if desired move is cardinal to other card.
   }
 }
 
