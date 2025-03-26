@@ -23,7 +23,6 @@
     flex-shrink: 0;
 }
 
-
 .card-base-state {
     background-color: #FFFFFF;
     width: 100px;
@@ -31,6 +30,29 @@
     border-radius: 8px;
     user-select: none;
     touch-action: none;
+}
+
+.card-inner-shape {
+    background-image: url('./triangle.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100px;
+    width: 100px;
+}
+
+.card-mult-top {
+    position: absolute;
+    color: black;
+    margin: 5px 0 0 10px;
+    font-size: 12px;
+}
+
+.card-mult-bot {
+    position: relative;
+    color: black;
+    bottom: 25px;
+    left: 80px;
+    font-size: 12px;
 }
 
 .card-dragging-state {

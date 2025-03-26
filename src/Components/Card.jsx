@@ -6,7 +6,9 @@ export function Card(props) {
 
     return (
         <div className={classes}>
-            {props.value}
+            <div className="card-mult-top">1x</div>
+            <div className="card-inner-shape"></div>
+            <div className="card-mult-bot">1x</div>
         </div>
     );
 }
