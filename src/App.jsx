@@ -85,11 +85,12 @@ function App() {
     let canDropB = true;
     let isCardinal = true;
 
-    // Only enforce cardinality rule if other card has been placed.
-    if (cardAParent !== null || cardBParent !== null) isCardinal = checkCardinality(cardId, over.id);
 
-    // Only allow assignment of dropped card to container if target container is empty.
     if (over !== null) {
+      // Only enforce cardinality rule if other card has been placed.
+      if ((cardAParent !== null && cardId !== 'active-card-a') || (cardBParent !== null && cardId !== 'active-card-b')) isCardinal = checkCardinality(cardId, over.id);
+
+      // Only allow assignment of dropped card to container if target container is empty.
       canDropA = (over.id !== cardBParent) ? true : false;
       canDropB = (over.id !== cardAParent) ? true : false;
     }
