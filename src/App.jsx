@@ -29,16 +29,19 @@ function App() {
     {cardAParent === null ? cardA : null}
     {cardBParent === null ? cardB : null}
 
-    <div className="grid-bg">{
-    // Populate grid
-    containers.map((id) => (
-    <GridCell id={id} key={id}>
-        {/* Make card child of grid cell from drag end. */}
-        {cardAParent === id ? cardA : null}
-        {cardBParent === id ? cardB : null}
-        </GridCell>))
-        
-    }</div>
+    <div className="grid-container">
+      <div className='grid-bg'></div>
+      
+      {
+      // Populate grid
+      containers.map((id) => (
+      <GridCell id={id} key={id}>
+          {/* Make card child of grid cell from drag end. */}
+          {cardAParent === id ? cardA : null}
+          {cardBParent === id ? cardB : null}
+          </GridCell>))
+          
+      }</div>
 
     {/* Handle live movement of cards */}
     <DragOverlay>
