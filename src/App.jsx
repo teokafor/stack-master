@@ -78,10 +78,20 @@ function App() {
   function handleDragEnd(event) {
     setActiveId(null);
 
-    const { over } = event;
-    const cardId = event.active.id;
-    if (cardId === 'active-card-a') setCardAParent(over ? over.id : null);
-    else setCardBParent(over ? over.id : null);
+    const { over } = event;         // grid-droppable-n
+    const cardId = event.active.id; // active-card-a / active-card-b
+
+    let canDropA = true;
+    let canDropB = true;
+
+    // Only allow assignment of dropped card to container if target container is empty.
+    if (over !== null) {
+      canDropA = (over.id !== cardBParent) ? true : false;
+      canDropB = (over.id !== cardAParent) ? true : false;
+    }
+    
+    if (cardId === 'active-card-a') setCardAParent(over && canDropA ? over.id : null);
+    else setCardBParent(over && canDropB ? over.id : null);
   }
 }
 
