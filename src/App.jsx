@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
-import { Draggable } from './Components/Draggable';
+import { Draggable } from './Components/Draggable/Draggable';
 import { GridCell } from './Components/GridCell/GridCell';
 import { Card, DummyCard } from './Components/Card/Card';
 import '/src/Components/Components.css';
