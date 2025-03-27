@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { Draggable } from './Components/Draggable';
 import { GridCell } from './Components/GridCell';
-import { Card } from './Components/Card';
-import { DummyCard } from './Components/DummyCard';
+import { Card, DummyCard } from './Components/Card/Card';
+import '/src/Components/Components.css';
+import '/src/Components/Card/Card.css';
 
 // Build an empty 5x5 array to represent grid cells
 const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
 
 function App() {
   const [activeId, setActiveId] = useState(null);
-
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
 

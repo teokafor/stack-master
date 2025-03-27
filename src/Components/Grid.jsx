@@ -1,4 +1,4 @@
-import '/src/Components/Components.css';
+// import '/src/Components/Components.css';
 
 
 function Grid() {  
