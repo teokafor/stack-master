@@ -1,41 +1,56 @@
+:root {
+    --card-back-size: 44px;
+    --card-border-size: 4px;
+    --card-size: 50px;
+    --shape-size: 37.5px;
+    --mult-font-size: 6px;
+
+    /* Probably revisit these ones later down the line */
+    --s-mult-top-margin: 2.5px 0 0 5px;
+    --s-mult-bot-bot: 12.5px;
+    --s-mult-bot-left: 40px;
+    --s-mult-bot-width: 10px; 
+}
+
 .card-back {
-    width: 88px;
-    height: 88px;
-    border-radius: 8px;
+    width: var(--card-back-size);
+    height: var(--card-back-size);
+    border-radius: var(--card-border-size);
     background-color: #CD5454;
 }
 
 .card-base-state {
     background-color: #FFFFFF;
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
+    width: var(--card-size);
+    height: var(--card-size);
+    border-radius: var(--card-border-size);
     user-select: none;
     touch-action: none;
 }
 
 .card-inner-shape {
     background-image: url('./hexagon.svg');
+    background-size: var(--shape-size);
     background-repeat: no-repeat;
     background-position: center;
-    height: 100px;
-    width: 100px;
+    height: var(--card-size);
+    width: var(--card-size);
 }
 
 .card-mult-top {
     position: absolute;
     color: black;
-    margin: 5px 0 0 10px;
-    font-size: 12px;
+    margin: var(--s-mult-top-margin);
+    font-size: var(--mult-font-size);
 }
 
 .card-mult-bot {
     position: relative;
     color: black;
-    bottom: 25px;
-    left: 80px;
-    font-size: 12px;
-    width: 20px;
+    bottom: var(--s-mult-bot-bot);
+    left: var(--s-mult-bot-left);
+    font-size: var(--mult-font-size);
+    width: var(--s-mult-bot-width);
 }
 
 .card-dragging-state {
@@ -47,5 +62,21 @@
 }
 
 .dummy-card {
-    width: 100px;
+    width: var(--card-size);
 }
+
+@media screen and (min-width: 1024px) {
+    :root {
+        --card-back-size: 88px;
+        --card-border-size: 8px;
+        --card-size: 100px;
+        --shape-size: 75px;
+        --mult-font-size: 12px;
+
+        /* Probably revisit these ones later down the line */
+        --s-mult-top-margin: 5px 0 0 10px;
+        --s-mult-bot-bot: 25px;
+        --s-mult-bot-left: 80px;
+        --s-mult-bot-width: 20px; 
+    }
+  }

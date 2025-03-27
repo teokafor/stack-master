@@ -1,23 +1,41 @@
+:root {
+    --grid-size: 256px;
+    --border-size: 1.5px;
+    --card-size: 50px;
+}
+
 .grid-container {
-    width: 512px;
-    height: 512px;
+    width: var(--grid-size);
+    height: var(--grid-size);
     display: flex;
-    gap: 3px;
+    gap: var(--border-size);
     flex-wrap: wrap;
     background-color: #C6C6C6;
+    border: var(--border-size) solid #C6C6C6;
 }
 
 .grid-bg {
     background-image: url('./Subtract.svg');
-    width: 512px;
-    height: 512px;
+    background-size: var(--grid-size);
+    width: var(--grid-size);
+    height: var(--grid-size);
     position: absolute;
     pointer-events: none;
+    background-position: center;
+
 }
 
 [id*='grid-droppable'] {
     background-color: #ededed;
-    width: 100px;
-    height: 100px;
+    width: var(--card-size);
+    height: var(--card-size);
     flex-shrink: 0;
 }
+
+@media screen and (min-width: 1024px) {
+    :root {
+        --grid-size: 512px;
+        --border-size: 3px;
+        --card-size: 100px;
+    }
+  }
