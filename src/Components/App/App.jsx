@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 
-import { Draggable } from './Components/Draggable/Draggable.jsx';
-import { Card } from './Components/Card/Card.jsx';
-import { Playerspace } from './Components/Playerspace/Playerspace.jsx';
-import { Grid } from './Components/Grid/Grid.jsx';
+// Components
+import { Draggable } from '../Draggable/Draggable.jsx';
+import { Card } from '../Card/Card.jsx';
+import { Playerspace } from '../Playerspace/Playerspace.jsx';
+import { Grid } from '../Grid/Grid.jsx';
 
-import '/src/Components/Components.css';
-import '/src/Components/Card/Card.css';
-import '/src/Components/Playerspace/Playerspace.css';
-import '/src/Components/Grid/Grid.css';
+// Styles
+import './App.css';
+import '../Card/Card.css';
+import '../Playerspace/Playerspace.css';
+import '../Grid/Grid.css';
 
 function App() {
   const [activeId, setActiveId] = useState(null);
@@ -63,7 +65,6 @@ function App() {
     if (cardId === 'active-card-a') setCardAParent(over && canDropA && isCardinal ? over.id : null);
     else setCardBParent(over && canDropB && isCardinal ? over.id : null);
   }
-
 
   function checkCardinality(cardId, currentContainer) {
     let otherContainer = cardId === 'active-card-a' ? cardBParent : cardAParent; // Get container of already placed card.
