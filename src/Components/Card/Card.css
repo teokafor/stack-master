@@ -5,6 +5,15 @@
     background-color: #CD5454;
 }
 
+.card-base-state {
+    background-color: #FFFFFF;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    user-select: none;
+    touch-action: none;
+}
+
 .card-inner-shape {
     background-image: url('./hexagon.svg');
     background-repeat: no-repeat;

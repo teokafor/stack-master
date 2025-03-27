@@ -66,7 +66,6 @@ function App() {
     let canDropB = true;
     let isCardinal = true;
 
-
     if (over !== null) {
       // Only enforce cardinality rule if other card has been placed.
       if ((cardAParent !== null && cardId !== 'active-card-a') || (cardBParent !== null && cardId !== 'active-card-b')) isCardinal = checkCardinality(cardId, over.id);
