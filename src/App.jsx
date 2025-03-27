@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
-import { Draggable } from './Components/Draggable/Draggable';
-import { GridCell } from './Components/GridCell/GridCell';
-import { Card } from './Components/Card/Card';
-import { Playerspace } from './Components/Playerspace/Playerspace';
+
+import { Draggable } from './Components/Draggable/Draggable.jsx';
+import { Card } from './Components/Card/Card.jsx';
+import { Playerspace } from './Components/Playerspace/Playerspace.jsx';
+import { Grid } from './Components/Grid/Grid.jsx';
 
 import '/src/Components/Components.css';
 import '/src/Components/Card/Card.css';
-import '/src/Components/Playerspace/Playerspace.css'
-
-// Build an empty 5x5 array to represent grid cells
-const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
+import '/src/Components/Playerspace/Playerspace.css';
+import '/src/Components/Grid/Grid.css';
 
 function App() {
   const [activeId, setActiveId] = useState(null);
@@ -23,25 +22,11 @@ function App() {
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
 
-
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>        
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} />
-
-        {/* !!! TODO: REFACTOR GRID INTO OWN COMPONENT W/ PROPS AND STLYES!!! */}
-        <div className='grid-container'>
-          <div className='grid-bg'></div>
-          {
-            // Populate grid
-            containers.map((id) => (
-              <GridCell id={id} key={id}>
-                {/* Make card child of grid cell from drag end. */}
-                {cardAParent === id ? cardA : null}
-                {cardBParent === id ? cardB : null}
-              </GridCell>))
-
-          }</div>
+        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB}  />
       </div>
 
       {/* Handle live movement of cards */}

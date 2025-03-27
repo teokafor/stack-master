@@ -1,0 +1,23 @@
+.grid-container {
+    width: 512px;
+    height: 512px;
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    background-color: #C6C6C6;
+}
+
+.grid-bg {
+    background-image: url('./Subtract.svg');
+    width: 512px;
+    height: 512px;
+    position: absolute;
+    pointer-events: none;
+}
+
+[id*='grid-droppable'] {
+    background-color: #ededed;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
