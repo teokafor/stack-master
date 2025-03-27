@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { Draggable } from './Components/Draggable/Draggable';
 import { GridCell } from './Components/GridCell/GridCell';
-import { Card, DummyCard } from './Components/Card/Card';
+import { Card } from './Components/Card/Card';
+import { Playerspace } from './Components/Playerspace/Playerspace';
+
 import '/src/Components/Components.css';
 import '/src/Components/Card/Card.css';
+import '/src/Components/Playerspace/Playerspace.css'
 
 // Build an empty 5x5 array to represent grid cells
 const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
@@ -20,35 +23,13 @@ function App() {
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
 
-  // Hold the space of the currently placed card 
-  const dummyCard = <DummyCard />
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <div className='containers'>
-        <div className='playerspace-container'>
-          <div className='playerspace'>
-            <div className='scorebug'>
-              <div className='current-score'>SCORE: 000</div>
-              <div className='high-score'>HIGH: 000</div>
-            </div>
-            <div className='draw-pile-container'>
-              <div className='card-base-state'>
-                <div className='card-back'></div>
-              </div>
+      <div className='containers'>        
+        <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} />
 
-              <div className='card-base-state'>
-                <div className='card-back'></div>
-              </div>
-            </div>
-            <div className='player-hand'>
-              {/* Move the card back into playerspace if not related to a grid cell. */}
-              {cardAParent === null ? cardA : dummyCard}
-              {cardBParent === null ? cardB : dummyCard}
-            </div>
-          </div>
-        </div>
-
+        {/* !!! TODO: REFACTOR GRID INTO OWN COMPONENT W/ PROPS AND STLYES!!! */}
         <div className='grid-container'>
           <div className='grid-bg'></div>
           {
