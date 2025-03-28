@@ -1,3 +1,4 @@
+// Returns an random object containing card info (Shape and Multiplier value)
 export function drawHand() {
     let poolA = ['diamond', 'hexagon'];
     let poolB = ['circle'];
@@ -10,8 +11,8 @@ export function drawHand() {
     else if (pool > 35) poolType = 'c';                 // 30% true
 
     switch (poolType) {
-        case 'a': return poolA[Math.floor(Math.random(1,2) * 2)];
-        case 'b': return poolB[0];
-        case 'c': return poolC[Math.floor(Math.random(1,2) * 2)];
+        case 'a': return {shape: poolA[Math.floor(Math.random(1,2) * 2)], mult: '3x'};
+        case 'b': return {shape: poolB[0], mult: '1x'};
+        case 'c': return {shape: poolC[Math.floor(Math.random(1,2) * 2)], mult: '2x'};
     }
 }

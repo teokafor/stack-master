@@ -29,7 +29,6 @@
 }
 
 .card-inner-shape {
-    background-image: url('./hexagon.svg');
     background-size: var(--shape-size);
     background-repeat: no-repeat;
     background-position: center;
