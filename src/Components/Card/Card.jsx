@@ -1,15 +1,17 @@
-export function Card({isDragging, isSelected, type}) {
+export function Card({isDragging, isSelected, type, color}) {
 
     // Not sure why null objects are passed first (StrictMode?) 
     // Either way, a more solid workaround should be implemented.
-    if (type === null) type = {shape: './gridlines', mult: ''}; 
+    if (type === null) type = {shape: './circle_r', mult: ''}; 
 
     // Mutate class list based on current card state
     let classes = "card-base-state";
     if (isDragging) classes += " card-dragging-state";
     if (isSelected) classes += " card-selected-state";
 
-    const style = {backgroundImage: `url(./${type.shape}.svg)` };
+
+    const path = color === 'b' ? `./${type.shape}_b.svg` : `./${type.shape}_r.svg`;
+    const style = {backgroundImage: `url(${path})`};
 
     return (
         <div className={classes}>
