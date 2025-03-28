@@ -1,7 +1,7 @@
 export function drawHand() {
-    let poolA = ['dia', 'hex'];
-    let poolB = ['cir'];
-    let poolC = ['tri', 'pen'];
+    let poolA = ['diamond', 'hexagon'];
+    let poolB = ['circle'];
+    let poolC = ['triangle', 'pentagon'];
     let pool = Math.floor(Math.random(1, 100) * 100);
     let poolType = null;
 

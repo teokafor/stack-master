@@ -36,7 +36,6 @@ function App() {
   const [bType, setBType] = useState(null);
 
   useEffect(() => {
-    const types = ['hex', 'cir', 'tri', 'pen', 'dia'];
     setAType(drawHand());
     setBType(drawHand());
   }, []);
@@ -44,8 +43,8 @@ function App() {
   // console.log(test);
 
   // Replace these with a one-time function call when the component is mounted?
-  const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} test={aType} /> : <Card isSelected={false} test={aType} />}</Draggable>
-  const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} test={bType} /> : <Card isSelected={false} test={bType} />}</Draggable>
+  const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} /> : <Card isSelected={false} type={aType} />}</Draggable>
+  const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} type={bType} /> : <Card isSelected={false} type={bType} />}</Draggable>
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -56,7 +55,7 @@ function App() {
 
       {/* Handle live movement of cards */}
       <DragOverlay>
-        {activeId === 'active-card-a' ? <Card isDragging={true} test={aType} /> : <Card isDragging={true} test={bType} />}
+        {activeId === 'active-card-a' ? <Card isDragging={true} type={aType} /> : <Card isDragging={true} type={bType} />}
       </DragOverlay>
     </DndContext>
   );
