@@ -12,13 +12,6 @@
     --s-mult-bot-width: 10px; 
 }
 
-.card-back {
-    width: var(--card-back-size);
-    height: var(--card-back-size);
-    border-radius: var(--card-border-size);
-    background-color: #CD5454;
-}
-
 .card-base-state {
     background-color: #FFFFFF;
     width: var(--card-size);

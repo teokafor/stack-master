@@ -13,11 +13,11 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB}) {
             </div>
             <div className='draw-pile-container'>
               <div className='card-base-state'>
-                <div className='card-back'></div>
+                <div className='card-back-black'></div>
               </div>
 
               <div className='card-base-state'>
-                <div className='card-back'></div>
+                <div className='card-back-red'></div>
               </div>
             </div>
             <div className='player-hand'>

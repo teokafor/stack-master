@@ -41,6 +41,20 @@
     flex-direction: column;    
 }
 
+[class*='card-back'] {
+    width: var(--card-back-size);
+    height: var(--card-back-size);
+    border-radius: var(--card-border-size);
+}
+
+.card-back-red {
+    background-color: #CD5454;
+}
+
+.card-back-black {
+    background-color: #5B5B5B;
+}
+
 .player-hand, .draw-pile-container {
     display: flex;
     justify-content: center;
