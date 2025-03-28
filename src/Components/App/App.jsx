@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
+
+import { drawHand } from '../../Functions/DrawHand.js';
 
 // Components
 import { Draggable } from '../Draggable/Draggable.jsx';
@@ -18,11 +20,32 @@ function App() {
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
 
+
   // Check if both cards belong to a parent (i.e., a droppable.)
   const isDraggable = (cardAParent === null || cardBParent === null) ? true : false;
 
-  const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
-  const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} /> : <Card isSelected={false} />}</Draggable>
+  /* 
+    TODO: 
+    Call function based on isDraggable that manages the handoff between the current cards being active to being stale
+    Also call function that generates two new cards.
+    Also call function that checks for game over condition
+
+  */
+
+  const [aType, setAType] = useState(null);
+  const [bType, setBType] = useState(null);
+
+  useEffect(() => {
+    const types = ['hex', 'cir', 'tri', 'pen', 'dia'];
+    setAType(drawHand());
+    setBType(drawHand());
+  }, []);
+
+  // console.log(test);
+
+  // Replace these with a one-time function call when the component is mounted?
+  const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} test={aType} /> : <Card isSelected={false} test={aType} />}</Draggable>
+  const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} test={bType} /> : <Card isSelected={false} test={bType} />}</Draggable>
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -33,7 +56,7 @@ function App() {
 
       {/* Handle live movement of cards */}
       <DragOverlay>
-        {activeId === 'active-card-a' ? <Card isDragging={true} /> : <Card isDragging={true} />}
+        {activeId === 'active-card-a' ? <Card isDragging={true} test={aType} /> : <Card isDragging={true} test={bType} />}
       </DragOverlay>
     </DndContext>
   );
@@ -52,6 +75,8 @@ function App() {
     let canDropA = true;
     let canDropB = true;
     let isCardinal = true;
+
+    // TODO: Add alternating color check here
 
     if (over !== null) {
       // Only enforce cardinality rule if other card has been placed.
