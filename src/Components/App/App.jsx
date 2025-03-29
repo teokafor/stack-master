@@ -20,26 +20,51 @@ function App() {
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
 
-
-  // Check if both cards belong to a parent (i.e., a droppable.)
-  const isDraggable = (cardAParent === null || cardBParent === null) ? true : false;
+  // Check if both cards belong to a parent (i.e., a droppable.)  
+  const [isDraggable, setIsDraggable] = useState(true);
+  if (cardAParent !== null && cardBParent !== null) if (isDraggable) setIsDraggable(false);
 
   /* 
     TODO: 
     Call function based on isDraggable that manages the handoff between the current cards being active to being stale
     Also call function that generates two new cards.
     Also call function that checks for game over condition
-
   */
 
   const [aType, setAType] = useState(null);
   const [bType, setBType] = useState(null);
 
+  const [grid, setGrid] = useState({});
+
   useEffect(() => {
     setAType(drawHand());
     setBType(drawHand());
+
+
+    // REDUNDANT FROM GRID.JSX!! SHOULD ABSTRACT CONTAINER GENERATION ELSEWHERE(?)
+    const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
+    let newGrid = {};
+    for (const key of containers) newGrid[key] = '';
+    setGrid(newGrid);
+
   }, []);
 
+
+  // Run when turn is over
+  useEffect(() => {
+    if (!isDraggable) {
+      const newStoreA = <Card type={aType} color={'b'} isPlaced={true} />
+      const newStoreB = <Card type={bType} color={'r'} isPlaced={true} />
+
+      setGrid( {...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB} );
+      setAType(drawHand());
+      setBType(drawHand());
+      setCardAParent(null);
+      setCardBParent(null);
+      setIsDraggable(true);
+    }
+
+  }, [isDraggable]);
 
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} color={'b'} /> : <Card isSelected={false} type={aType} color={'b'} />}</Draggable>
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} type={bType} color={'r'} /> : <Card isSelected={false} type={bType} color={'r'} />}</Draggable>
@@ -48,7 +73,7 @@ function App() {
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>        
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} />
-        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB}  />
+        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid}  />
       </div>
 
       {/* Handle live movement of cards */}
