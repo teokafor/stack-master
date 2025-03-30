@@ -15,14 +15,22 @@ import '../Card/Card.css';
 import '../Playerspace/Playerspace.css';
 import '../Grid/Grid.css';
 
+const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
+
 function App() {
   const [activeId, setActiveId] = useState(null);
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
-
-  // Check if both cards belong to a parent (i.e., a droppable.)  
+  const [dragOverlayDuration, setDragOverlayDuration] = useState(DRAG_OVERLAY_DURATION);
   const [isDraggable, setIsDraggable] = useState(true);
-  if (cardAParent !== null && cardBParent !== null) if (isDraggable) setIsDraggable(false);
+  const [aType, setAType] = useState(null);
+  const [bType, setBType] = useState(null);
+  const [grid, setGrid] = useState({});
+  
+  if (cardAParent !== null && cardBParent !== null) if (isDraggable) {
+    setDragOverlayDuration(0);
+    setIsDraggable(false);
+  }
 
   /* 
     TODO: 
@@ -31,10 +39,7 @@ function App() {
     Also call function that checks for game over condition
   */
 
-  const [aType, setAType] = useState(null);
-  const [bType, setBType] = useState(null);
 
-  const [grid, setGrid] = useState({});
 
   useEffect(() => {
     setAType(drawHand());
@@ -62,6 +67,7 @@ function App() {
       setCardAParent(null);
       setCardBParent(null);
       setIsDraggable(true);
+      setDragOverlayDuration(DRAG_OVERLAY_DURATION);
     }
 
   }, [isDraggable]);
@@ -77,12 +83,11 @@ function App() {
       </div>
 
       {/* Handle live movement of cards */}
-      <DragOverlay>
+      <DragOverlay dropAnimation={{duration: dragOverlayDuration}}>
         {activeId === 'active-card-a' ? <Card isDragging={true} type={aType} color={'b'} /> : <Card isDragging={true} type={bType} color={'r'} />}
       </DragOverlay>
     </DndContext>
   );
-
 
   function handleDragStart(event) {
     setActiveId(event.active.id);
