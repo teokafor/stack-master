@@ -12,13 +12,20 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB}) {
               <div className='high-score'>HIGH: 000</div>
             </div>
             <div className='draw-pile-container'>
-              <div className='card-base-state'>
-                <div className='card-back-black'></div>
+              <div className='draw-pile'>
+                <div className='card-base-state'><div className='card-back-black'></div></div>
+                <div className='card-base-state'><div className='card-back-black'></div></div>
+                <div className='card-base-state'><div className='card-back-black'></div></div>
+                <div className='card-base-state'><div className='card-back-black'></div></div>
               </div>
 
-              <div className='card-base-state'>
-                <div className='card-back-red'></div>
+              <div className='draw-pile'>
+                <div className='card-base-state'><div className='card-back-red'></div></div>
+                <div className='card-base-state'><div className='card-back-red'></div></div>
+                <div className='card-base-state'><div className='card-back-red'></div></div>
+                <div className='card-base-state'><div className='card-back-red'></div></div>
               </div>
+
             </div>
             <div className='player-hand'>
               {/* Move the card back into playerspace if not related to a grid cell. */}

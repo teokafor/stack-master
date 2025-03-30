@@ -7,8 +7,12 @@
     --scorebug-font-size: 10px;
     --gap-size: 16px;
 
+    --stack-offset-a: -43px;
+    --stack-offset-b: -36px;
+    --stack-offset-c: -29px;
+
     /* This one's just a placeholder until the stack can be rendered properly. */
-    --s-pile-size: 82.5px;
+    --s-pile-size: 75px;
 }
 
 .playerspace-container {
@@ -39,6 +43,7 @@
     height: inherit;
     display: flex;
     flex-direction: column;    
+    justify-content: space-evenly;
 }
 
 [class*='card-back'] {
@@ -58,7 +63,6 @@
 .player-hand, .draw-pile-container {
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: var(--gap-size);
 }
 
@@ -66,20 +70,27 @@
     height: var(--s-pile-size);
 }
 
-.draw-pile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: var(--s-pile-size);
-}
-
-.draw-pile-container > div {
+.draw-pile > .card-base-state {
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.draw-pile > div:nth-child(n + 2) {
+    position: absolute;
+    margin-top: var(--stack-offset-a);
+}
+
+.draw-pile > div:nth-child(n + 3) {
+    position: absolute;
+    margin-top: var(--stack-offset-b);
+}
+
+.draw-pile > div:nth-child(n + 4) {
+    position: absolute;
+    margin-top: var(--stack-offset-c);
+}
 @media screen and (min-width: 1024px) {
     :root {
         --grid-size: 512px;
@@ -90,7 +101,11 @@
         --scorebug-font-size: 12px;
         --gap-size: 32px;
     
+        --stack-offset-a: -86px;
+        --stack-offset-b: -72px;
+        --stack-offset-c: -58px;
+    
         /* This one's just a placeholder until the stack can be rendered properly. */
-        --s-pile-size: 165px;
+        --s-pile-size: 150px;
     }
   }

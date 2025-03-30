@@ -104,7 +104,10 @@ function App() {
       canDropA = (over.id !== cardBParent) ? true : false;
       canDropB = (over.id !== cardAParent) ? true : false;
     }
-    
+
+    let test = grid[over.id];
+    console.log(test);
+      
     if (cardId === 'active-card-a') setCardAParent(over && canDropA && isCardinal ? over.id : null);
     else setCardBParent(over && canDropB && isCardinal ? over.id : null);
   }
