@@ -32,15 +32,6 @@ function App() {
     setIsDraggable(false);
   }
 
-  /* 
-    TODO: 
-    Call function based on isDraggable that manages the handoff between the current cards being active to being stale
-    Also call function that generates two new cards.
-    Also call function that checks for game over condition
-  */
-
-
-
   useEffect(() => {
     setAType(drawHand());
     setBType(drawHand());
@@ -122,6 +113,8 @@ function App() {
     let otherContainer = cardId === 'active-card-a' ? cardBParent : cardAParent; // Get container of already placed card.
     let containerId = Number(otherContainer.split('-').reverse()[0]); // Grab id of already placed card.
     let validContainers = [containerId - 5, containerId - 1, containerId + 1, containerId + 5]; // Create array of legal positions based on already placed card.
+    if (validContainers[2] % 5 === 0) validContainers.splice(2, 1); // Prevent placement of consecutive edge cards.
+    if ((validContainers[1] + 1) % 5 === 0) validContainers.splice(1, 1);
     validContainers = validContainers.filter((n) => n >= 0 && n <= 24).map((item) => 'grid-droppable-' + item); // Remove OOB positions and format id.
     return validContainers.includes(currentContainer) ? true : false; // Return true if desired move is cardinal to other card.
   }
