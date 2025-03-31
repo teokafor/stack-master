@@ -19,6 +19,8 @@
     border-radius: var(--card-border-size);
     user-select: none;
     touch-action: none;
+    z-index: 2;
+    position: relative;
 }
 
 .card-inner-shape {
@@ -51,6 +53,10 @@
 
 .card-selected-state {
     opacity: 50%;
+}
+
+.card-placed-state {
+    position: absolute;
 }
 
 .dummy-card {

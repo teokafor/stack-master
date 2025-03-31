@@ -28,12 +28,6 @@ function App() {
   const [grid, setGrid] = useState({});
 
 
-  // const [canFillA, setCanFillA] = useState(true);
-  // const [canFillB, setCanFillB] = useState(true);
-
-  const canFillA = useRef(true);
-  const canFillB = useRef(true);
-
   if (cardAParent !== null && cardBParent !== null) if (isDraggable) {
     setDragOverlayDuration(0);
     setIsDraggable(false);
@@ -56,24 +50,9 @@ function App() {
   // Run when turn is over
   useEffect(() => {
     if (!isDraggable) {
-      let newStoreA = '';
-      let newStoreB = '';
-
-      if (canFillA)  {
-        newStoreA = <Card type={aType} color={'b'} isPlaced={true} />
-        console.log('placing a');
-        canFillA.current = true;
-      } else {
-        console.log('cant place a');
-      }
-
-      if (canFillB) {
-        newStoreB = <Card type={bType} color={'r'} isPlaced={true} />
-        console.log('placing b');
-        canFillB.current = true;
-      } else {
-        console.log('cant place b');
-      }
+      // Only store card to grid if grid cell is already empty. 
+      const newStoreA = (grid[cardAParent] === '') ? <Card type={aType} color={'b'} isPlaced={true} /> : '';
+      const newStoreB = (grid[cardBParent] === '') ? <Card type={bType} color={'r'} isPlaced={true} /> : '';
 
       setGrid( {...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB} );
       setAType(drawHand());
@@ -133,22 +112,6 @@ function App() {
 
     if (cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id);
     else isBLegal = calculateScore(cardId, over.id);
-    // isALegal = calculateScore(); // This way we can reject wrong-color placement. Maybe refactor cardinality to follow this too?
-
-
-
-
-    // let oldCard = grid[over.id];
-    // let curCard = cardA.props.children;
-
-    // if (oldCard !== '') {
-    //   console.log(curCard);
-    //   calculateScore(oldCard, curCard);
-    // }
-
-
-
-    console.log(`Status of legality pre round end:\nisALegal: ${isALegal}\nisBLegal: ${isBLegal}`);
     
     // *Ends* the turn.      
     if (cardId === 'active-card-a') setCardAParent(isALegal ? over.id : null);
@@ -172,12 +135,6 @@ function App() {
     // Check for color. Returns false if not met. any code after this point can be a bit looser, as it will make the assumption that cards are diff.
     if (placedCard !== '' && curCard.props.children.props.color !== placedCard.props.color) return false;
     else return true;
-
-    // // Check if 2nd placement (make prerequisite before calling calculateScore?)
-    // if (cardAParent !== null || cardBParent !== null) {
-    //   if (placedCard !== '' && curCardId === 'active-card-a') console.log('changing a');
-    //   if (placedCard !== '' && curCardId === 'active-card-b') console.log('changing b');
-    // }
   }
 }
 

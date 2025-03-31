@@ -30,6 +30,7 @@
     width: var(--card-size);
     height: var(--card-size);
     flex-shrink: 0;
+    position: relative;
 }
 
 @media screen and (min-width: 1024px) {
