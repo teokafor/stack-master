@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 
 import { drawHand } from '../../Functions/DrawHand.js';
@@ -26,7 +26,14 @@ function App() {
   const [aType, setAType] = useState(null);
   const [bType, setBType] = useState(null);
   const [grid, setGrid] = useState({});
-  
+
+
+  // const [canFillA, setCanFillA] = useState(true);
+  // const [canFillB, setCanFillB] = useState(true);
+
+  const canFillA = useRef(true);
+  const canFillB = useRef(true);
+
   if (cardAParent !== null && cardBParent !== null) if (isDraggable) {
     setDragOverlayDuration(0);
     setIsDraggable(false);
@@ -49,8 +56,24 @@ function App() {
   // Run when turn is over
   useEffect(() => {
     if (!isDraggable) {
-      const newStoreA = <Card type={aType} color={'b'} isPlaced={true} />
-      const newStoreB = <Card type={bType} color={'r'} isPlaced={true} />
+      let newStoreA = '';
+      let newStoreB = '';
+
+      if (canFillA)  {
+        newStoreA = <Card type={aType} color={'b'} isPlaced={true} />
+        console.log('placing a');
+        canFillA.current = true;
+      } else {
+        console.log('cant place a');
+      }
+
+      if (canFillB) {
+        newStoreB = <Card type={bType} color={'r'} isPlaced={true} />
+        console.log('placing b');
+        canFillB.current = true;
+      } else {
+        console.log('cant place b');
+      }
 
       setGrid( {...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB} );
       setAType(drawHand());
@@ -105,11 +128,31 @@ function App() {
       canDropB = (over.id !== cardAParent) ? true : false;
     }
 
-    let test = grid[over.id];
-    console.log(test);
-      
-    if (cardId === 'active-card-a') setCardAParent(over && canDropA && isCardinal ? over.id : null);
-    else setCardBParent(over && canDropB && isCardinal ? over.id : null);
+    let isALegal = canDropA && over && isCardinal;
+    let isBLegal = canDropB && over && isCardinal;
+
+    if (cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id);
+    else isBLegal = calculateScore(cardId, over.id);
+    // isALegal = calculateScore(); // This way we can reject wrong-color placement. Maybe refactor cardinality to follow this too?
+
+
+
+
+    // let oldCard = grid[over.id];
+    // let curCard = cardA.props.children;
+
+    // if (oldCard !== '') {
+    //   console.log(curCard);
+    //   calculateScore(oldCard, curCard);
+    // }
+
+
+
+    console.log(`Status of legality pre round end:\nisALegal: ${isALegal}\nisBLegal: ${isBLegal}`);
+    
+    // *Ends* the turn.      
+    if (cardId === 'active-card-a') setCardAParent(isALegal ? over.id : null);
+    else setCardBParent(isBLegal ? over.id : null);
   }
 
   function checkCardinality(cardId, currentContainer) {
@@ -120,6 +163,21 @@ function App() {
     if ((validContainers[1] + 1) % 5 === 0) validContainers.splice(1, 1);
     validContainers = validContainers.filter((n) => n >= 0 && n <= 24).map((item) => 'grid-droppable-' + item); // Remove OOB positions and format id.
     return validContainers.includes(currentContainer) ? true : false; // Return true if desired move is cardinal to other card.
+  }
+
+  function calculateScore(curCardId, placedCardId) {
+    let curCard = curCardId !== 'active-card-a' ? cardA : cardB;
+    let placedCard = grid[placedCardId];
+
+    // Check for color. Returns false if not met. any code after this point can be a bit looser, as it will make the assumption that cards are diff.
+    if (placedCard !== '' && curCard.props.children.props.color !== placedCard.props.color) return false;
+    else return true;
+
+    // // Check if 2nd placement (make prerequisite before calling calculateScore?)
+    // if (cardAParent !== null || cardBParent !== null) {
+    //   if (placedCard !== '' && curCardId === 'active-card-a') console.log('changing a');
+    //   if (placedCard !== '' && curCardId === 'active-card-b') console.log('changing b');
+    // }
   }
 }
 
