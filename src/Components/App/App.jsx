@@ -27,6 +27,9 @@ function App() {
   const [bType, setBType] = useState(null);
   const [grid, setGrid] = useState({});
 
+  const [scoreA, setScoreA] = useState(0);
+  const [scoreB, setScoreB] = useState(0);
+  const [roundScore, setRoundScore] = useState(0);
 
   if (cardAParent !== null && cardBParent !== null) if (isDraggable) {
     setDragOverlayDuration(0);
@@ -37,13 +40,11 @@ function App() {
     setAType(drawHand());
     setBType(drawHand());
 
-
     // REDUNDANT FROM GRID.JSX!! SHOULD ABSTRACT CONTAINER GENERATION ELSEWHERE(?)
     const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
     let newGrid = {};
     for (const key of containers) newGrid[key] = '';
     setGrid(newGrid);
-
   }, []);
 
 
@@ -54,12 +55,15 @@ function App() {
       const newStoreA = (grid[cardAParent] === '') ? <Card type={aType} color={'b'} isPlaced={true} /> : '';
       const newStoreB = (grid[cardBParent] === '') ? <Card type={bType} color={'r'} isPlaced={true} /> : '';
 
+      setRoundScore(cur => cur + scoreA + scoreB);
       setGrid( {...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB} );
       setAType(drawHand());
       setBType(drawHand());
       setCardAParent(null);
       setCardBParent(null);
       setIsDraggable(true);
+      setScoreA(0);
+      setScoreB(0);
       setDragOverlayDuration(DRAG_OVERLAY_DURATION);
     }
 
@@ -71,7 +75,7 @@ function App() {
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>        
-        <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} />
+        <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} />
         <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid}  />
       </div>
 
@@ -96,7 +100,8 @@ function App() {
     let canDropB = true;
     let isCardinal = true;
 
-    // TODO: Add alternating color check here
+    let isALegal = false;
+    let isBLegal = false;
 
     if (over !== null) {
       // Only enforce cardinality rule if other card has been placed.
@@ -105,17 +110,16 @@ function App() {
       // Only allow assignment of dropped card to container if target container is empty.
       canDropA = (over.id !== cardBParent) ? true : false;
       canDropB = (over.id !== cardAParent) ? true : false;
+
+      isALegal = canDropA && over && isCardinal;
+      isBLegal = canDropB && over && isCardinal;
+
+      if (cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id);
+      else isBLegal = calculateScore(cardId, over.id);
     }
-
-    let isALegal = canDropA && over && isCardinal;
-    let isBLegal = canDropB && over && isCardinal;
-
-    if (cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id);
-    else isBLegal = calculateScore(cardId, over.id);
-    
-    // *Ends* the turn.      
-    if (cardId === 'active-card-a') setCardAParent(isALegal ? over.id : null);
-    else setCardBParent(isBLegal ? over.id : null);
+      // Starts end-of-round code.      
+      if (cardId === 'active-card-a') setCardAParent(isALegal ? over.id : null);
+      else setCardBParent(isBLegal ? over.id : null);
   }
 
   function checkCardinality(cardId, currentContainer) {
@@ -129,12 +133,16 @@ function App() {
   }
 
   function calculateScore(curCardId, placedCardId) {
-    let curCard = curCardId !== 'active-card-a' ? cardA : cardB;
+    let curCard = curCardId === 'active-card-a' ? cardA : cardB;
     let placedCard = grid[placedCardId];
 
-    // Check for color. Returns false if not met. any code after this point can be a bit looser, as it will make the assumption that cards are diff.
-    if (placedCard !== '' && curCard.props.children.props.color !== placedCard.props.color) return false;
-    else return true;
+    // Check for color. Returns false if not met.
+    if (placedCard !== '' && curCard.props.children.props.color === placedCard.props.color) return false; 
+    else if (placedCard !== '') {
+      if (curCardId === 'active-card-a') setScoreA(curCard.props.children.props.type.mult * placedCard.props.type.mult);
+      else setScoreB(curCard.props.children.props.type.mult * placedCard.props.type.mult);
+    }
+    return true;
   }
 }
 

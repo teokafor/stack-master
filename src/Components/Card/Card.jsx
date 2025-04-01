@@ -16,9 +16,9 @@ export function Card({isDragging, isSelected, isPlaced, type, color}) {
 
     return (
         <div className={classes}>
-            <div className="card-mult-top">{type.mult}</div>
+            <div className="card-mult-top">{type.mult}x</div>
             <div className="card-inner-shape" style={style}></div>
-            <div className="card-mult-bot">{type.mult}</div>
+            <div className="card-mult-bot">{type.mult}x</div>
         </div>
     );
 }

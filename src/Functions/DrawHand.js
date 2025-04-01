@@ -11,8 +11,8 @@ export function drawHand() {
     else if (pool > 35) poolType = 'c';                 // 30% true
 
     switch (poolType) {
-        case 'a': return {shape: poolA[Math.floor(Math.random(1,2) * 2)], mult: '3x'};
-        case 'b': return {shape: poolB[0], mult: '1x'};
-        case 'c': return {shape: poolC[Math.floor(Math.random(1,2) * 2)], mult: '2x'};
+        case 'a': return {shape: poolA[Math.floor(Math.random(1,2) * 2)], mult: 3};
+        case 'b': return {shape: poolB[0], mult: 1};
+        case 'c': return {shape: poolC[Math.floor(Math.random(1,2) * 2)], mult: 2};
     }
 }
