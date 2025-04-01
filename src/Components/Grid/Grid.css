@@ -22,7 +22,7 @@
     position: absolute;
     pointer-events: none;
     background-position: center;
-
+    z-index: 2;
 }
 
 [id*='grid-droppable'] {
