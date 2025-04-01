@@ -5,6 +5,7 @@
     --card-size: 50px;
     --scorebug-margin-size: 6px;
     --scorebug-font-size: 10px;
+    --scorebug-mult-font-size: 8px;
     --gap-size: 16px;
 
     --stack-offset-a: -43px;
@@ -28,7 +29,7 @@
 .scorebug {
     display: flex;
     justify-content: space-between;
-    margin: var(--scorebug-margin-size);
+    margin: var(--scorebug-margin-size) var(--scorebug-margin-size) 0 var(--scorebug-margin-size);
 }
 
 .scorebug > div {
@@ -37,13 +38,19 @@
     user-select: none;
 }
 
+.current-mult {
+    letter-spacing: 20%;
+    text-align: center;
+    font-size: var(--scorebug-mult-font-size);
+    color: #D7D7D7;
+}
 
 .playerspace {
     width: var(--playerspace-size);
     height: inherit;
     display: flex;
     flex-direction: column;    
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
 }
 
 [class*='card-back'] {
@@ -98,7 +105,8 @@
         --border-size: 3px;
         --card-size: 100px;
         --scorebug-margin-size: 12px;
-        --scorebug-font-size: 12px;
+        --scorebug-font-size: 20px;
+        --scorebug-mult-font-size: 16px;
         --gap-size: 32px;
     
         --stack-offset-a: -86px;
