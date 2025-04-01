@@ -111,6 +111,11 @@ function App() {
       else if (cardId === 'active-card-b' && isBLegal) isBLegal = checkCardinality(cardId, over.id);
     }
 
+    // Run shape check
+    if (isALegal && cardId === 'active-card-a') isALegal = checkShapes(cardId, over.id);
+    else if (isBLegal && cardId === 'active-card-b') isBLegal = checkShapes(cardId, over.id);
+
+
     // Run color check & score
     if (isALegal && cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id);
     else if (isBLegal && cardId === 'active-card-b') isBLegal = calculateScore(cardId, over.id);
@@ -132,9 +137,29 @@ function App() {
       return validContainers.includes(currentContainer) ? true : false; // Return true if desired move is cardinal to other card.
     }
 
+    function checkShapes(curCardId, placedCardId) {
+      const curCard = curCardId === 'active-card-a' ? cardA : cardB;
+      const placedCard = grid[placedCardId];
+
+      const validMatches = {
+        'diamond':  ['diamaond', 'triangle'],
+        'triangle': ['diamond', 'triangle', 'circle'],
+        'circle':   ['triangle', 'circle', 'pentagon'],
+        'pentagon': ['circle', 'pentagon', 'hexagon'],
+        'hexagon':  ['pentagon', 'hexagon']
+      };
+      
+      if (placedCard !== '') {
+          if (validMatches[curCard.props.children.props.type.shape].includes(placedCard.props.type.shape)) return true;
+          else return false;
+      } 
+      return true;
+    }
+
+    // Todo: split into color check and run calculation at end only if legal.
     function calculateScore(curCardId, placedCardId) {
-      let curCard = curCardId === 'active-card-a' ? cardA : cardB;
-      let placedCard = grid[placedCardId];
+      const curCard = curCardId === 'active-card-a' ? cardA : cardB;
+      const placedCard = grid[placedCardId];
 
       // Check for color. Returns false if not met.
       if (placedCard !== '' && curCard.props.children.props.color === placedCard.props.color) {
