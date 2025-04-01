@@ -7,6 +7,7 @@
     --scorebug-font-size: 10px;
     --scorebug-mult-font-size: 8px;
     --gap-size: 16px;
+    --legend-size: 60px;
 
     --stack-offset-a: -43px;
     --stack-offset-b: -36px;
@@ -20,7 +21,6 @@
     width: var(--grid-size);
     height: var(--grid-size);
     background-color: #ededed;
-    
     display: flex;
     justify-content: center;
 
@@ -50,7 +50,7 @@
     height: inherit;
     display: flex;
     flex-direction: column;    
-    /* justify-content: space-evenly; */
+    justify-content: space-between;
 }
 
 [class*='card-back'] {
@@ -98,6 +98,15 @@
     position: absolute;
     margin-top: var(--stack-offset-c);
 }
+
+.legend {
+    background-image: url('./legend.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* flex-grow: 1; */
+    height: var(--legend-size);
+}
 @media screen and (min-width: 1024px) {
     :root {
         --grid-size: 512px;
@@ -108,6 +117,7 @@
         --scorebug-font-size: 20px;
         --scorebug-mult-font-size: 16px;
         --gap-size: 32px;
+        --legend-size: 120px;
     
         --stack-offset-a: -86px;
         --stack-offset-b: -72px;
