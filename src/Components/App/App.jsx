@@ -4,7 +4,7 @@ import { DndContext, DragOverlay } from '@dnd-kit/core';
 // Helper functions
 import { drawHand } from '../../Functions/DrawHand.js';
 import { generateBlackouts } from '../../Functions/Blackout.js';
-import { checkCardinality, checkShapes, calculateScore } from '../../Functions/Rules.js';
+import { checkCardinality, checkShapes, checkColor, calculateScore } from '../../Functions/Rules.js';
 
 // Components
 import { Draggable } from '../Draggable/Draggable.jsx';
@@ -133,7 +133,11 @@ function App() {
     if (isALegal && cardId === 'active-card-a') isALegal = checkShapes(cardId, over.id, cardA, cardB, grid);
     else if (isBLegal && cardId === 'active-card-b') isBLegal = checkShapes(cardId, over.id, cardA, cardB, grid);
 
-    // Run color check & score
+    // Run color check 
+    if (isALegal && cardId === 'active-card-a') isALegal = checkColor(cardId, over.id, cardA, cardB, grid);
+    else if (isBLegal && cardId === 'active-card-b') isBLegal = checkColor(cardId, over.id, cardA, cardB, grid);
+
+    // Granted the desired move passes all checks, calculate score:
     if (isALegal && cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id, cardA, cardB, grid, setScoreA, setScoreB);
     else if (isBLegal && cardId === 'active-card-b') isBLegal = calculateScore(cardId, over.id, cardA, cardB, grid, setScoreA, setScoreB);
 

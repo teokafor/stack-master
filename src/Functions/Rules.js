@@ -27,7 +27,14 @@ export function checkShapes(curCardId, placedCardId, cardA, cardB, grid) {
     return true;
 }
 
-// Todo: split into color check and run calculation at end only if legal.
+export function checkColor(curCardId, placedCardId, cardA, cardB, grid) {
+    const curCard = curCardId === 'active-card-a' ? cardA : cardB;
+    const placedCard = grid[placedCardId];
+
+    if (placedCard !== '' && curCard.props.children.props.color === placedCard.props.color) return false;
+    else return true;
+}
+
 export function calculateScore(curCardId, placedCardId, cardA, cardB, grid, setScoreA, setScoreB) {
     const curCard = curCardId === 'active-card-a' ? cardA : cardB;
     const placedCard = grid[placedCardId];
@@ -37,9 +44,7 @@ export function calculateScore(curCardId, placedCardId, cardA, cardB, grid, setS
     if (curCardId === 'active-card-b' && placedCard === '') setScoreB(0);
 
     // Check for color. Returns false if not met.
-    if (placedCard !== '' && curCard.props.children.props.color === placedCard.props.color) {
-        // return false;
-    } else if (placedCard !== '') {
+    if (placedCard !== '') {
         if (curCardId === 'active-card-a') setScoreA(curCard.props.children.props.type.mult * placedCard.props.type.mult);
         else setScoreB(curCard.props.children.props.type.mult * placedCard.props.type.mult);
     }
