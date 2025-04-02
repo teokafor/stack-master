@@ -17,21 +17,26 @@ import '../Playerspace/Playerspace.css';
 import '../Grid/Grid.css';
 
 const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
+const CHAIN_LIMIT = 5;
 
 function App() {
+  // General management
   const [activeId, setActiveId] = useState(null);
-  const [cardAParent, setCardAParent] = useState(null);
-  const [cardBParent, setCardBParent] = useState(null);
   const [dragOverlayDuration, setDragOverlayDuration] = useState(DRAG_OVERLAY_DURATION);
   const [isDraggable, setIsDraggable] = useState(true);
+  // Cards
+  const [cardAParent, setCardAParent] = useState(null);
+  const [cardBParent, setCardBParent] = useState(null);
   const [aType, setAType] = useState(null);
   const [bType, setBType] = useState(null);
+  // Grid
   const [grid, setGrid] = useState({});
   const [blackouts, setBlackouts] = useState([]);
-
+  // Scoring
   const [scoreA, setScoreA] = useState(0);
   const [scoreB, setScoreB] = useState(0);
   const [roundScore, setRoundScore] = useState(0);
+  const [roundMultiplier, setRoundMultiplier] = useState(1);
 
   if (cardAParent !== null && cardBParent !== null) if (isDraggable) {
     setDragOverlayDuration(0);
@@ -59,7 +64,14 @@ function App() {
       const newStoreA = (grid[cardAParent] === '') ? <Card type={aType} color={'b'} isPlaced={true} /> : '';
       const newStoreB = (grid[cardBParent] === '') ? <Card type={bType} color={'r'} isPlaced={true} /> : '';
 
-      setRoundScore(cur => cur + scoreA + scoreB);
+      // Check if the multiplier can increase
+      if (scoreA !== 0 || scoreB !== 0) {
+        if (roundMultiplier < CHAIN_LIMIT) setRoundMultiplier(cur => cur + 1);
+      } else {
+        setRoundMultiplier(1);
+      }
+
+      setRoundScore(cur => cur + (scoreA + scoreB) * roundMultiplier);
       setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
       setAType(drawHand());
       setBType(drawHand());
@@ -79,7 +91,7 @@ function App() {
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
-        <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} />
+        <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier}/>
         <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} />
       </div>
 
@@ -118,7 +130,6 @@ function App() {
     // Run shape check
     if (isALegal && cardId === 'active-card-a') isALegal = checkShapes(cardId, over.id);
     else if (isBLegal && cardId === 'active-card-b') isBLegal = checkShapes(cardId, over.id);
-
 
     // Run color check & score
     if (isALegal && cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id);
