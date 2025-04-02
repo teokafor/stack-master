@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 
+// Helper functions
 import { drawHand } from '../../Functions/DrawHand.js';
 import { generateBlackouts } from '../../Functions/Blackout.js';
+import { checkCardinality, checkShapes, calculateScore } from '../../Functions/Rules.js';
 
 // Components
 import { Draggable } from '../Draggable/Draggable.jsx';
@@ -123,72 +125,21 @@ function App() {
 
     // Only enforce cardinality rule if other card has been placed.
     if ((cardAParent !== null && cardId !== 'active-card-a') || (cardBParent !== null && cardId !== 'active-card-b')) {
-      if (cardId === 'active-card-a' && isALegal) isALegal = checkCardinality(cardId, over.id);
-      else if (cardId === 'active-card-b' && isBLegal) isBLegal = checkCardinality(cardId, over.id);
+      if (cardId === 'active-card-a' && isALegal) isALegal = checkCardinality(cardId, over.id, cardAParent, cardBParent);
+      else if (cardId === 'active-card-b' && isBLegal) isBLegal = checkCardinality(cardId, over.id, cardAParent, cardBParent);
     }
 
     // Run shape check
-    if (isALegal && cardId === 'active-card-a') isALegal = checkShapes(cardId, over.id);
-    else if (isBLegal && cardId === 'active-card-b') isBLegal = checkShapes(cardId, over.id);
+    if (isALegal && cardId === 'active-card-a') isALegal = checkShapes(cardId, over.id, cardA, cardB, grid);
+    else if (isBLegal && cardId === 'active-card-b') isBLegal = checkShapes(cardId, over.id, cardA, cardB, grid);
 
     // Run color check & score
-    if (isALegal && cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id);
-    else if (isBLegal && cardId === 'active-card-b') isBLegal = calculateScore(cardId, over.id);
+    if (isALegal && cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id, cardA, cardB, grid, setScoreA, setScoreB);
+    else if (isBLegal && cardId === 'active-card-b') isBLegal = calculateScore(cardId, over.id, cardA, cardB, grid, setScoreA, setScoreB);
 
     // Starts end-of-round code.      
     if (cardId === 'active-card-a') setCardAParent(isALegal ? over.id : null);
     else setCardBParent(isBLegal ? over.id : null);
-  
-
-
-    // Todo: refactor rule checks into own file at some point.
-    function checkCardinality(cardId, currentContainer) {
-      let otherContainer = cardId === 'active-card-a' ? cardBParent : cardAParent; // Get container of already placed card.
-      let containerId = Number(otherContainer.split('-').reverse()[0]); // Grab id of already placed card.
-      let validContainers = [containerId - 5, containerId - 1, containerId + 1, containerId + 5]; // Create array of legal positions based on already placed card.
-      if (validContainers[2] % 5 === 0) validContainers.splice(2, 1); // Prevent placement of consecutive edge cards.
-      if ((validContainers[1] + 1) % 5 === 0) validContainers.splice(1, 1);
-      validContainers = validContainers.filter((n) => n >= 0 && n <= 24).map((item) => 'grid-droppable-' + item); // Remove OOB positions and format id.
-      return validContainers.includes(currentContainer) ? true : false; // Return true if desired move is cardinal to other card.
-    }
-
-    function checkShapes(curCardId, placedCardId) {
-      const curCard = curCardId === 'active-card-a' ? cardA : cardB;
-      const placedCard = grid[placedCardId];
-
-      const validMatches = {
-        'diamond':  ['diamond', 'triangle'],
-        'triangle': ['diamond', 'triangle', 'circle'],
-        'circle':   ['triangle', 'circle', 'pentagon'],
-        'pentagon': ['circle', 'pentagon', 'hexagon'],
-        'hexagon':  ['pentagon', 'hexagon']
-      };
-      
-      if (placedCard !== '') {
-          if (validMatches[curCard.props.children.props.type.shape].includes(placedCard.props.type.shape)) return true;
-          else return false;
-      } 
-      return true;
-    }
-
-    // Todo: split into color check and run calculation at end only if legal.
-    function calculateScore(curCardId, placedCardId) {
-      const curCard = curCardId === 'active-card-a' ? cardA : cardB;
-      const placedCard = grid[placedCardId];
-
-      // Clear score if previously legal score, then was moved.
-      if (curCardId === 'active-card-a' && placedCard === '') setScoreA(0);
-      if (curCardId === 'active-card-b' && placedCard === '') setScoreB(0);
-
-      // Check for color. Returns false if not met.
-      if (placedCard !== '' && curCard.props.children.props.color === placedCard.props.color) {
-        return false;
-      } else if (placedCard !== '') {
-        if (curCardId === 'active-card-a') setScoreA(curCard.props.children.props.type.mult * placedCard.props.type.mult);
-        else setScoreB(curCard.props.children.props.type.mult * placedCard.props.type.mult);
-      }
-      return true;
-    }
   }
 }
 
