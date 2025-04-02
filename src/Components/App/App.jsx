@@ -176,6 +176,10 @@ function App() {
       const curCard = curCardId === 'active-card-a' ? cardA : cardB;
       const placedCard = grid[placedCardId];
 
+      // Clear score if previously legal score, then was moved.
+      if (curCardId === 'active-card-a' && placedCard === '') setScoreA(0);
+      if (curCardId === 'active-card-b' && placedCard === '') setScoreB(0);
+
       // Check for color. Returns false if not met.
       if (placedCard !== '' && curCard.props.children.props.color === placedCard.props.color) {
         return false;
