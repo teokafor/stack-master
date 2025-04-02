@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 
 import { drawHand } from '../../Functions/DrawHand.js';
+import { generateBlackouts } from '../../Functions/Blackout.js';
 
 // Components
 import { Draggable } from '../Draggable/Draggable.jsx';
@@ -26,6 +27,7 @@ function App() {
   const [aType, setAType] = useState(null);
   const [bType, setBType] = useState(null);
   const [grid, setGrid] = useState({});
+  const [blackouts, setBlackouts] = useState([]);
 
   const [scoreA, setScoreA] = useState(0);
   const [scoreB, setScoreB] = useState(0);
@@ -45,6 +47,8 @@ function App() {
     let newGrid = {};
     for (const key of containers) newGrid[key] = '';
     setGrid(newGrid);
+
+    setBlackouts(generateBlackouts(containers));
   }, []);
 
 
@@ -76,7 +80,7 @@ function App() {
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} />
-        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} />
+        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} />
       </div>
 
       {/* Handle live movement of cards */}
@@ -142,7 +146,7 @@ function App() {
       const placedCard = grid[placedCardId];
 
       const validMatches = {
-        'diamond':  ['diamaond', 'triangle'],
+        'diamond':  ['diamond', 'triangle'],
         'triangle': ['diamond', 'triangle', 'circle'],
         'circle':   ['triangle', 'circle', 'pentagon'],
         'pentagon': ['circle', 'pentagon', 'hexagon'],

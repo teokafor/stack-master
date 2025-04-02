@@ -1,9 +1,8 @@
 import { GridCell } from '../GridCell/GridCell';
 
-export function Grid({cardAParent, cardBParent, cardA, cardB, grid}) {
-    
+export function Grid({cardAParent, cardBParent, cardA, cardB, grid, containers}) {    
     // Build an empty 5x5 array to represent grid cells
-    const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
+    let containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
 
     let keyArr = Object.keys(grid);    
     return (
