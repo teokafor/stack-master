@@ -5,6 +5,10 @@
     --shape-size: 37.5px;
     --mult-font-size: 6px;
 
+
+    --angle: 45deg;
+    --border-size: 0.3rem;
+
     /* Probably revisit these ones later down the line */
     --s-mult-top-margin: 2.5px 0 0 5px;
     --s-mult-bot-bot: 12.5px;
@@ -21,6 +25,9 @@
     touch-action: none;
     z-index: 2;
     position: relative;
+
+    box-sizing: border-box;
+    border: 3px solid white;
 }
 
 .card-inner-shape {
@@ -57,7 +64,44 @@
 
 .card-placed-state {
     position: absolute;
+
 }
+
+/* fix shape offsets */
+
+.card-on-board-state {
+    box-sizing: border-box;
+    border: 3px dotted transparent;
+    background-image: linear-gradient(
+        to right,
+        rgb(255 255 255 / 1),
+        rgb(255 255 255 / 1)
+      ),
+      conic-gradient(
+        from var(--angle),
+        #C6C6C6 0deg 90deg,
+        #ffffff 90deg 180deg,
+        #ffffff 180deg 270deg,
+        #ffffff 270deg 360deg
+      );
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+  
+  @keyframes rotate {
+    to {
+      --angle: 360deg;
+    }
+  }
+  
+  .card-on-board-state {
+    animation: rotate 3s linear infinite;
+  }
 
 .dummy-card {
     width: var(--card-size);
