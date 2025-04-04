@@ -70,7 +70,18 @@
     position: absolute;
 }
 
-/* fix shape offsets */
+
+@keyframes fade {
+  to {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+.card-cleared-state {
+  animation: fade 300ms linear;
+  animation-fill-mode: forwards;
+}
 
 .card-on-board-state {
     box-sizing: border-box;
@@ -110,6 +121,7 @@
 .dummy-card {
     width: var(--card-size);
 }
+
 
 @media screen and (min-width: 1024px) {
     :root {

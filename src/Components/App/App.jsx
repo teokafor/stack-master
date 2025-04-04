@@ -46,7 +46,6 @@ function App() {
     setAType(drawHand());
     setBType(drawHand());
 
-    // REDUNDANT FROM GRID.JSX!! SHOULD ABSTRACT CONTAINER GENERATION ELSEWHERE(?)
     const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
     let newGrid = {};
     for (const key of containers) newGrid[key] = '';
@@ -60,8 +59,21 @@ function App() {
   useEffect(() => {
     if (!isDraggable) {
       // Only store card to grid if grid cell is already empty. 
-      const newStoreA = (grid[cardAParent] === '') ? <Card type={aType} color={'b'} isPlaced={true} /> : '';
-      const newStoreB = (grid[cardBParent] === '') ? <Card type={bType} color={'r'} isPlaced={true} /> : '';
+      let newStoreA = (grid[cardAParent] === '') ? <Card type={aType} color={'b'} isPlaced={true} isCleared={false} /> : <Card type={aType} color={'b'} isCleared={true} />;
+      let newStoreB = (grid[cardBParent] === '') ? <Card type={bType} color={'r'} isPlaced={true} isCleared={false} /> : <Card type={bType} color={'r'} isCleared={true} />;
+      
+      let isAClear = newStoreA.props.isCleared;
+      let isBClear = newStoreB.props.isCleared;
+
+      // Set grid first, regardless of clear status. If any cards need to play an animation, they must be rendered first!
+      setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
+      
+      // Wait out the duration of the animation (if any played), then conditionally clear the grid and re-render it.
+      setTimeout(() => {
+        if (isAClear) newStoreA = '';
+        if (isBClear) newStoreB = '';
+        setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
+      }, 300);
 
       // Check if the multiplier can increase
       if (scoreA !== 0 || scoreB !== 0) {
@@ -71,7 +83,6 @@ function App() {
       }
 
       setRoundScore(cur => cur + (scoreA + scoreB) * roundMultiplier);
-      setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
       setAType(drawHand());
       setBType(drawHand());
       setCardAParent(null);
@@ -81,7 +92,6 @@ function App() {
       setScoreB(0);
       setDragOverlayDuration(DRAG_OVERLAY_DURATION);
     }
-
   }, [isDraggable]);
 
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} color={'b'} /> : <Card isSelected={false} isOnBoard={cardAParent !== null ? true : false} type={aType} color={'b'} />}</Draggable>
