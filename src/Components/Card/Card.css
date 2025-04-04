@@ -4,13 +4,12 @@
     --card-size: 50px;
     --shape-size: 37.5px;
     --mult-font-size: 6px;
-
-
+    --active-border-size: 1.5px;
     --angle: 45deg;
     --border-size: 0.3rem;
 
     /* Probably revisit these ones later down the line */
-    --s-mult-top-margin: 2.5px 0 0 5px;
+    --s-mult-top-margin: 1px 0 0 3px;
     --s-mult-bot-bot: 12.5px;
     --s-mult-bot-left: 40px;
     --s-mult-bot-width: 10px; 
@@ -27,7 +26,7 @@
     position: relative;
 
     box-sizing: border-box;
-    border: 3px solid white;
+    border: var(--active-border-size) solid white;
 }
 
 .card-inner-shape {
@@ -36,6 +35,11 @@
     background-position: center;
     height: var(--card-size);
     width: var(--card-size);
+
+    /* Account for active border */
+    position: relative;
+    bottom: var(--active-border-size);
+    right: var(--active-border-size);  
 }
 
 .card-mult-top {
@@ -64,14 +68,13 @@
 
 .card-placed-state {
     position: absolute;
-
 }
 
 /* fix shape offsets */
 
 .card-on-board-state {
     box-sizing: border-box;
-    border: 3px dotted transparent;
+    border: var(--active-border-size) dotted transparent;
     background-image: linear-gradient(
         to right,
         rgb(255 255 255 / 1),
@@ -103,6 +106,7 @@
     animation: rotate 3s linear infinite;
   }
 
+
 .dummy-card {
     width: var(--card-size);
 }
@@ -114,9 +118,10 @@
         --card-size: 100px;
         --shape-size: 75px;
         --mult-font-size: 12px;
+        --active-border-size: 3px;
 
         /* Probably revisit these ones later down the line */
-        --s-mult-top-margin: 5px 0 0 10px;
+        --s-mult-top-margin: 2px 0 0 6px;
         --s-mult-bot-bot: 25px;
         --s-mult-bot-left: 80px;
         --s-mult-bot-width: 20px; 

@@ -6,15 +6,16 @@
     --scorebug-margin-size: 6px;
     --scorebug-font-size: 10px;
     --scorebug-mult-font-size: 8px;
+    --scorebug-mult-margin-top: -2.5px;
+    --scorebug-mult-margin-bot: 12.5px;
     --gap-size: 16px;
     --legend-size: 60px;
+    --s-pile-size: 80px;
+
 
     --stack-offset-a: -43px;
     --stack-offset-b: -36px;
     --stack-offset-c: -29px;
-
-    /* This one's just a placeholder until the stack can be rendered properly. */
-    --s-pile-size: 75px;
 }
 
 .playerspace-container {
@@ -43,6 +44,8 @@
     font-size: var(--scorebug-mult-font-size);
     color: #D7D7D7;
     user-select: none;
+    margin-top: var(--scorebug-mult-margin-top);
+    margin-bottom: var(--scorebug-mult-margin-bot);
 }
 
 .playerspace {
@@ -51,7 +54,6 @@
     display: flex;
     flex-direction: column;    
     justify-content: flex-start;
-    /* gap: 4px; */
 }
 
 [class*='card-back'] {
@@ -106,6 +108,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     height: var(--legend-size);
+    flex-grow: 1;
 }
 @media screen and (min-width: 1024px) {
     :root {
@@ -116,14 +119,14 @@
         --scorebug-margin-size: 12px;
         --scorebug-font-size: 20px;
         --scorebug-mult-font-size: 16px;
+        --scorebug-mult-margin-top: -5px;
+        --scorebug-mult-margin-bot: 25px;
         --gap-size: 32px;
         --legend-size: 120px;
+        --s-pile-size: 160px;
     
         --stack-offset-a: -86px;
         --stack-offset-b: -72px;
-        --stack-offset-c: -58px;
-    
-        /* This one's just a placeholder until the stack can be rendered properly. */
-        --s-pile-size: 150px;
+        --stack-offset-c: -58px;    
     }
   }
