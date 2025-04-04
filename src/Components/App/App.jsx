@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
-
 // Helper functions
 import { drawHand } from '../../Functions/DrawHand.js';
 import { generateBlackouts } from '../../Functions/Blackout.js';
 import { checkCardinality, checkShapes, checkColor, calculateScore } from '../../Functions/Rules.js';
-
 // Components
 import { Draggable } from '../Draggable/Draggable.jsx';
 import { Card } from '../Card/Card.jsx';
 import { Playerspace } from '../Playerspace/Playerspace.jsx';
 import { Grid } from '../Grid/Grid.jsx';
-
 // Styles
 import './App.css';
 import '../Card/Card.css';
@@ -91,7 +88,7 @@ function App() {
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} type={bType} color={'r'} /> : <Card isSelected={false} isOnBoard={cardBParent !== null ? true : false} type={bType} color={'r'} />}</Draggable>
 
   return (
-    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    <DndContext autoScroll={false} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier}/>
         <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} />
