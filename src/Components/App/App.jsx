@@ -16,6 +16,7 @@ import '../Card/Card.css';
 import '../Playerspace/Playerspace.css';
 import '../Grid/Grid.css';
 import '../ChainManager/ChainManager.css';
+import '../Help/Help.css'
 
 const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
 const CHAIN_LIMIT = 5;

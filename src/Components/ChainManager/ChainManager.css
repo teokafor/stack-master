@@ -21,6 +21,7 @@
     height: var(--card-size);
     font-size: var(--font-size);
     font-family: Tomorrow-Regular;
+    user-select: none;
 }
 
 @keyframes anim {

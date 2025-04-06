@@ -11,7 +11,7 @@
     /* Probably revisit these ones later down the line */
     --s-mult-top-margin: 1px 0 0 3px;
     --s-mult-bot-bot: 12.5px;
-    --s-mult-bot-left: 37.5px;
+    --s-mult-bot-left: 35px;
     --s-mult-bot-width: 10px; 
 }
 
@@ -58,6 +58,8 @@
     left: var(--s-mult-bot-left);
     font-size: var(--mult-font-size);
     width: var(--s-mult-bot-width);
+
+    transform: rotate(180deg);
 
     font-family: Tomorrow-Regular;
 }
@@ -139,7 +141,7 @@
         /* Probably revisit these ones later down the line */
         --s-mult-top-margin: 2px 0 0 6px;
         --s-mult-bot-bot: 25px;
-        --s-mult-bot-left: 75px;
+        --s-mult-bot-left: 70px;
         --s-mult-bot-width: 20px; 
     }
   }

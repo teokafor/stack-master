@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { DummyCard } from "../Card/Card";
+import { Help } from "../Help/Help";
 
 export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, mult}) {
-    // Holds the space of the currently placed card 
-    const dummyCard = <DummyCard />
+    const [isShowingHelp, setIsShowingHelp] = useState(false);
 
+    // Holds the space of the currently placed card 
+    const dummyCard = <DummyCard />;
+
+    const helpScreen = <Help func={showHelp} />;
 
     let renderScore = '';
     // Add leading 0s to score:
@@ -11,8 +16,17 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
     else if (curScore >= 10 && curScore <= 99) renderScore = '0' + curScore;
     else renderScore = curScore;
 
+    function showHelp() {
+        setIsShowingHelp(cur => !cur);
+    }
+
     return (
         <div className='playerspace-container'>
+          {isShowingHelp ? helpScreen : null}
+          <div className='playerspace-buttons'>
+            <button className='help-button' onClick={showHelp}></button>
+            <button className='sound-button'></button>
+          </div>
           <div className='playerspace'>
             <div className='scorebug'>
               <div className='current-score'>SCORE: {renderScore}</div>
@@ -42,6 +56,8 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
 
             <div className='legend'></div>
           </div>
+          <div className='playerspace-buttons'></div>
         </div>
     );
 }
+

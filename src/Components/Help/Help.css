@@ -1,0 +1,84 @@
+:root {
+    --grid-size: 256px;
+    --border-size: 1.5px;
+    --help-font-size: 18px;
+    --button-padding: 3px 8px;
+    --help-margin-top: 12px;
+    --help-width: 180px;
+}
+
+.help-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: var(--grid-size);
+    height: var(--grid-size);
+    position: absolute;
+    border: var(--border-size) solid rgba(0, 0, 0, 0);
+    border-right: none;
+    z-index: 4;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
+    animation-name: blurEaseOpen;
+    animation-timing-function: cubic-bezier(0.87, 0, 0.13, 1);
+    user-select: none;
+}
+
+.help-screen > div {
+    user-select: none;
+}
+
+@keyframes blurEaseOpen {
+    to {
+        background-color: #000000a8;
+        backdrop-filter: blur(8px);
+    }
+}
+
+
+.header-text {
+    color: white;
+    font-family: Tomorrow-Light;
+    letter-spacing: 30%;
+    font-size: var(--help-font-size);
+    margin-top: var(--help-margin-top);
+}
+
+.subheader-text {
+    color: white;
+    font-family: Tomorrow-Light;
+    letter-spacing: 15%;
+    font-size: calc(var(--help-font-size) / 2);
+    width: var(--help-width);
+    text-align: center;
+    margin-top: var(--help-margin-top);
+}
+
+.body-text {
+    font-family: Tomorrow-Light;
+    color: white;
+    font-size: calc(var(--help-font-size) / 3);
+    width: var(--help-width);
+}
+
+.return-button {
+    border: solid 1px white;
+    letter-spacing: 15%;
+    font-size: calc(var(--help-font-size) / 2);
+    background-color: #00000000;
+    border-radius: 0;
+    padding: var(--button-padding);
+    margin-top: var(--help-margin-top);
+}
+
+
+@media screen and (min-width: 1024px) {
+    :root {
+        --grid-size: 512px;
+        --border-size: 3px;
+        --help-font-size: 36px;
+        --button-padding: 6px 16px;
+        --help-margin-top: 24px;
+        --help-width: 360px;
+    }
+}
