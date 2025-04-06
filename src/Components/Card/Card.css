@@ -11,7 +11,7 @@
     /* Probably revisit these ones later down the line */
     --s-mult-top-margin: 1px 0 0 3px;
     --s-mult-bot-bot: 12.5px;
-    --s-mult-bot-left: 40px;
+    --s-mult-bot-left: 37.5px;
     --s-mult-bot-width: 10px; 
 }
 
@@ -47,6 +47,8 @@
     color: black;
     margin: var(--s-mult-top-margin);
     font-size: var(--mult-font-size);
+
+    font-family: Tomorrow-Regular;
 }
 
 .card-mult-bot {
@@ -56,6 +58,8 @@
     left: var(--s-mult-bot-left);
     font-size: var(--mult-font-size);
     width: var(--s-mult-bot-width);
+
+    font-family: Tomorrow-Regular;
 }
 
 .card-dragging-state {
@@ -135,7 +139,7 @@
         /* Probably revisit these ones later down the line */
         --s-mult-top-margin: 2px 0 0 6px;
         --s-mult-bot-bot: 25px;
-        --s-mult-bot-left: 80px;
+        --s-mult-bot-left: 75px;
         --s-mult-bot-width: 20px; 
     }
   }

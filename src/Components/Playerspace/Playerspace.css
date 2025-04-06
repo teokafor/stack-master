@@ -3,7 +3,7 @@
     --playerspace-size: 128px;
     --border-size: 1.5px;
     --card-size: 50px;
-    --scorebug-margin-size: 6px;
+    --scorebug-margin-size: 4.5px;
     --scorebug-font-size: 10px;
     --scorebug-mult-font-size: 8px;
     --scorebug-mult-margin-top: -2.5px;
@@ -11,7 +11,6 @@
     --gap-size: 16px;
     --legend-size: 60px;
     --s-pile-size: 80px;
-
     --stack-offset-a: -43px;
     --stack-offset-b: -36px;
     --stack-offset-c: -29px;
@@ -35,6 +34,8 @@
     color: black;
     font-size: var(--scorebug-font-size);
     user-select: none;
+
+    font-family: Tomorrow-Light;
 }
 
 .current-mult {
@@ -45,6 +46,8 @@
     user-select: none;
     margin-top: var(--scorebug-mult-margin-top);
     margin-bottom: var(--scorebug-mult-margin-bot);
+
+    font-family: Tomorrow-Light;
 }
 
 .playerspace {
@@ -115,7 +118,7 @@
         --playerspace-size: 256px;
         --border-size: 3px;
         --card-size: 100px;
-        --scorebug-margin-size: 12px;
+        --scorebug-margin-size: 9px;
         --scorebug-font-size: 20px;
         --scorebug-mult-font-size: 16px;
         --scorebug-mult-margin-top: -5px;

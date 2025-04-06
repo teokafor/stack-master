@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'Tomorrow-Light';
+  src: url('./font/Tomorrow-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Tomorrow-Regular';
+  src: url('./font/Tomorrow-Regular.ttf');
+}
+
 .containers {
   display: flex;
   justify-content: center;

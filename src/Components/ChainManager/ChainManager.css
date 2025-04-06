@@ -9,7 +9,7 @@
     animation-fill-mode: forwards;
     opacity: 0;
     animation-delay: 300ms; /* Wait for card fade-out before showing score */
-    color: #000000;
+    color: #202020;
     z-index: 3;
     text-align: center;
     font-weight: 900;
@@ -20,6 +20,7 @@
     width: var(--card-size);
     height: var(--card-size);
     font-size: var(--font-size);
+    font-family: Tomorrow-Regular;
 }
 
 @keyframes anim {

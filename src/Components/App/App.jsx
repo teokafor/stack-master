@@ -58,12 +58,6 @@ function App() {
     setBlackouts(generateBlackouts(containers));
   }, []);
 
-  // let chainToastA = !isDraggable && scoreA > 0 ? <ChainManager score={scoreA} roundMultiplier={roundMultiplier} id={cardAParent} /> : null;
-  // let chainToastB = !isDraggable && scoreB > 0 ? <ChainManager score={scoreB} roundMultiplier={roundMultiplier} id={cardBParent} /> : null;
-
-  let chainToastA = null;
-  let chainToastB = null;
-
   // Run when turn is over
   useEffect(() => {
     if (!isDraggable) {
@@ -77,7 +71,6 @@ function App() {
       setChainA(!isDraggable && scoreA > 0 ? <ChainManager score={scoreA} roundMultiplier={roundMultiplier} id={cardAParent} /> : null);
       setChainB(!isDraggable && scoreB > 0 ? <ChainManager score={scoreB} roundMultiplier={roundMultiplier} id={cardBParent} /> : null);
 
-      
       // Set grid first, regardless of clear status. If any cards need to play an animation, they must be rendered first!
       setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
       
@@ -88,11 +81,12 @@ function App() {
         setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
       }, 300);
 
+      setIsDraggable(true);
+
       // Longer time allotted for score text
       setTimeout(() => {
         setScoreA(0);
         setScoreB(0);
-        setIsDraggable(true);
         setChainA(null);
         setChainB(null);
 
