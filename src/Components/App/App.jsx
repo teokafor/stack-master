@@ -9,11 +9,13 @@ import { Draggable } from '../Draggable/Draggable.jsx';
 import { Card } from '../Card/Card.jsx';
 import { Playerspace } from '../Playerspace/Playerspace.jsx';
 import { Grid } from '../Grid/Grid.jsx';
+import { ChainManager } from '../ChainManager/ChainManager.jsx';
 // Styles
 import './App.css';
 import '../Card/Card.css';
 import '../Playerspace/Playerspace.css';
 import '../Grid/Grid.css';
+import '../ChainManager/ChainManager.css';
 
 const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
 const CHAIN_LIMIT = 5;
@@ -36,6 +38,8 @@ function App() {
   const [scoreB, setScoreB] = useState(0);
   const [roundScore, setRoundScore] = useState(0);
   const [roundMultiplier, setRoundMultiplier] = useState(1);
+  const [chainA, setChainA] = useState(null);
+  const [chainB, setChainB] = useState(null);
 
   if (cardAParent !== null && cardBParent !== null) if (isDraggable) {
     setDragOverlayDuration(0);
@@ -54,6 +58,11 @@ function App() {
     setBlackouts(generateBlackouts(containers));
   }, []);
 
+  // let chainToastA = !isDraggable && scoreA > 0 ? <ChainManager score={scoreA} roundMultiplier={roundMultiplier} id={cardAParent} /> : null;
+  // let chainToastB = !isDraggable && scoreB > 0 ? <ChainManager score={scoreB} roundMultiplier={roundMultiplier} id={cardBParent} /> : null;
+
+  let chainToastA = null;
+  let chainToastB = null;
 
   // Run when turn is over
   useEffect(() => {
@@ -65,6 +74,10 @@ function App() {
       let isAClear = newStoreA.props.isCleared;
       let isBClear = newStoreB.props.isCleared;
 
+      setChainA(!isDraggable && scoreA > 0 ? <ChainManager score={scoreA} roundMultiplier={roundMultiplier} id={cardAParent} /> : null);
+      setChainB(!isDraggable && scoreB > 0 ? <ChainManager score={scoreB} roundMultiplier={roundMultiplier} id={cardBParent} /> : null);
+
+      
       // Set grid first, regardless of clear status. If any cards need to play an animation, they must be rendered first!
       setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
       
@@ -75,21 +88,27 @@ function App() {
         setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
       }, 300);
 
-      // Check if the multiplier can increase
-      if (scoreA !== 0 || scoreB !== 0) {
-        if (roundMultiplier < CHAIN_LIMIT) setRoundMultiplier(cur => cur + 1);
-      } else {
-        setRoundMultiplier(1);
-      }
+      // Longer time allotted for score text
+      setTimeout(() => {
+        setScoreA(0);
+        setScoreB(0);
+        setIsDraggable(true);
+        setChainA(null);
+        setChainB(null);
+
+        // Check if the multiplier can increase
+        if (scoreA !== 0 || scoreB !== 0) {
+          if (roundMultiplier < CHAIN_LIMIT) setRoundMultiplier(cur => cur + 1);
+        } else {
+          setRoundMultiplier(1);
+        }
+      }, 950);
 
       setRoundScore(cur => cur + (scoreA + scoreB) * roundMultiplier);
       setAType(drawHand());
       setBType(drawHand());
       setCardAParent(null);
       setCardBParent(null);
-      setIsDraggable(true);
-      setScoreA(0);
-      setScoreB(0);
       setDragOverlayDuration(DRAG_OVERLAY_DURATION);
     }
   }, [isDraggable]);
@@ -97,15 +116,16 @@ function App() {
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} color={'b'} /> : <Card isSelected={false} isOnBoard={cardAParent !== null ? true : false} type={aType} color={'b'} />}</Draggable>
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} type={bType} color={'r'} /> : <Card isSelected={false} isOnBoard={cardBParent !== null ? true : false} type={bType} color={'r'} />}</Draggable>
 
+
   return (
     <DndContext autoScroll={false} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier}/>
-        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} />
+        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} />
       </div>
 
       {/* Handle live movement of cards */}
-      <DragOverlay dropAnimation={{ duration: dragOverlayDuration }}>
+      <DragOverlay dropAnimation={{ duration: dragOverlayDuration }} zIndex={2}>
         {activeId === 'active-card-a' ? <Card isDragging={true} type={aType} color={'b'} /> : <Card isDragging={true} type={bType} color={'r'} />}
       </DragOverlay>
     </DndContext>
