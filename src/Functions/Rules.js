@@ -17,7 +17,9 @@ export function checkShapes(curCardId, placedCardId, cardA, cardB, grid) {
         'triangle': ['diamond', 'triangle', 'circle'],
         'circle': ['triangle', 'circle', 'pentagon'],
         'pentagon': ['circle', 'pentagon', 'hexagon'],
-        'hexagon': ['pentagon', 'hexagon']
+        'hexagon': ['pentagon', 'hexagon'],
+        'hexagon_hollow': ['hexagon_hollow'],
+        'diamond_hollow': ['diamond_hollow']
     };
 
     if (placedCard !== '') {

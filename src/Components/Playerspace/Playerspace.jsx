@@ -30,7 +30,7 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
           <div className='playerspace'>
             <div className='scorebug'>
               <div className='current-score'>SCORE: {renderScore}</div>
-              <div className='high-score'>HIGH: 000</div>
+              <div className='high-score'>HIGH: 968</div>
             </div>
             <div className='current-mult'>MULTIPLIER BONUS: {mult}X</div>
             <div className='draw-pile-container'>
