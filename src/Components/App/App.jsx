@@ -57,7 +57,7 @@ function App() {
     for (const key of containers) newGrid[key] = '';
     setGrid(newGrid);
 
-    setBlackouts(generateBlackouts(containers));
+    setBlackouts(generateBlackouts());
   }, []);
 
   // Run when turn is over

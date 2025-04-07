@@ -16,8 +16,8 @@ export function drawHand() {
     // pool = 99;
 
 
-    if (pool <= 15) poolType = 'a';                      
-    else if (pool > 15 && pool <= 40) poolType = 'b'; 	 
+    if (pool <= 25) poolType = 'a';                      
+    else if (pool > 25 && pool <= 40) poolType = 'b'; 	 
     else if (pool > 40 && pool <= 85) poolType = 'c';
     else if (pool > 85) poolType = 'd';
 
