@@ -1,11 +1,11 @@
-:root {
+/* :root {
     --grid-size: 256px;
-    --border-size: 1.5px;
+    --border-size: calc(0.3px * var(--size));
     --help-font-size: 18px;
     --button-padding: 3px 8px;
     --help-margin-top: 12px;
     --help-width: 180px;
-}
+} */
 
 .help-screen {
     display: flex;
@@ -73,13 +73,13 @@
 }
 
 
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
     :root {
         --grid-size: 512px;
-        --border-size: 3px;
+        --border-size: calc(0.6px * var(--size));
         --help-font-size: 36px;
         --button-padding: 6px 16px;
         --help-margin-top: 24px;
         --help-width: 360px;
     }
-}
+} */

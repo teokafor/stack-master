@@ -1,8 +1,8 @@
-:root {
+/* :root {
     --grid-size: 256px;
-    --border-size: 1.5px;
+    --border-size: calc(0.3px * var(--size));
     --card-size: 50px;
-}
+} */
 
 .grid-container {
     width: var(--grid-size);
@@ -12,10 +12,11 @@
     flex-wrap: wrap;
     background-color: #C6C6C6;
     border: var(--border-size) solid #C6C6C6;
+    border-radius: var(--card-border-size);
 }
 
 .grid-bg {
-    background-image: url('./Subtract.svg');
+    background-image: url('./Subtract2.svg');
     background-size: var(--grid-size);
     width: var(--grid-size);
     height: var(--grid-size);
@@ -27,7 +28,7 @@
 
 /* grid and blackout prefixes */
 [id*='-droppable'] {
-    background-color: #ededed;
+    background-color: #ededed; 
     width: var(--card-size);
     height: var(--card-size);
     flex-shrink: 0;
@@ -38,10 +39,10 @@
     background-color: #333333;
 }
 
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
     :root {
         --grid-size: 512px;
         --border-size: 3px;
         --card-size: 100px;
     }
-  }
+  } */

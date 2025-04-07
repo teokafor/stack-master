@@ -20,6 +20,7 @@ import '../Help/Help.css'
 
 const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
 const CHAIN_LIMIT = 5;
+const GRID_LENGTH = 16;
 
 function App() {
   // General management
@@ -51,7 +52,7 @@ function App() {
     setAType(drawHand());
     setBType(drawHand());
 
-    const containers = Array.apply(null, Array(25)).map(function (x, i) { return 'grid-droppable-' + i; });
+    const containers = Array.apply(null, Array(GRID_LENGTH)).map(function (x, i) { return 'grid-droppable-' + i; });
     let newGrid = {};
     for (const key of containers) newGrid[key] = '';
     setGrid(newGrid);

@@ -1,3 +1,37 @@
+:root {
+  --grid-size: 257px;
+  --border-size: 3px;
+  --help-font-size: 18px;
+  --button-padding: 3px 8px;
+  --help-margin-top: 12px;
+  --help-width: 180px;
+  --font-size: 8px;
+  --playerspace-buttons-width: 32px;
+  --playerspace-size: 150px;
+  --scorebug-margin-size: 4.5px;
+  --scorebug-font-size: 10px;
+  --scorebug-mult-font-size: 10px;
+  --scorebug-mult-margin-top: -2.5px;
+  --scorebug-mult-margin-bot: 12.5px;
+  --legend-size: 60px;
+  --s-pile-size: 80px;
+  --angle: 45deg;
+  --gap-size: 16px;
+  --stack-offset-c: -54px;
+  --stack-offset-b: -61px;
+  --stack-offset-a: -68px;
+  --card-size: 62px;
+  --shape-size: 47px;
+  --card-border-size: 4px;
+  --card-back-size: 55.33px;
+  --mult-font-size: 6px;
+  --active-border-size: 1.5px;
+  --s-mult-top-margin: 1px 0 0 3px;
+  --s-mult-bot-bot: 12.5px;
+  --s-mult-bot-left: 45px;
+  --s-mult-bot-width: 10px;
+}
+
 @font-face {
   font-family: 'Tomorrow-Light';
   src: url('./font/Tomorrow-Light.ttf');
@@ -24,6 +58,40 @@ body {
 }
 
 @media screen and (min-width: 1024px) {
+  :root {
+    --grid-size: 514px;
+    --border-size: 6px;
+    --help-font-size: 36px;
+    --button-padding: 6px 16px;
+    --help-margin-top: 24px;
+    --help-width: 360px;
+    --font-size: 16px;
+    --playerspace-buttons-width: 64px;
+    --playerspace-size: 300px;
+    --scorebug-margin-size: 9px;
+    --scorebug-font-size: 20px;
+    --scorebug-mult-font-size: 20px;
+    --scorebug-mult-margin-top: -5px;
+    --scorebug-mult-margin-bot: 25px;
+    --legend-size: 120px;
+    --s-pile-size: 160px;
+    --angle: 90deg;
+    --gap-size: 32px;
+    --stack-offset-c: -108px;
+    --stack-offset-b: -122px;
+    --stack-offset-a: -136px;
+    --card-size: 124px;
+    --shape-size: 94px;
+    --card-border-size: 8px;
+    --card-back-size: 110.66px;
+    --mult-font-size: 12px;
+    --active-border-size: 3px;
+    --s-mult-top-margin: 2px 0 0 6px;
+    --s-mult-bot-bot: 25px;
+    --s-mult-bot-left: 90px;
+    --s-mult-bot-width: 20px;  
+  }
+  
   .containers {
     flex-direction: row;
   }

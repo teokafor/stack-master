@@ -1,10 +1,10 @@
 export function checkCardinality(cardId, currentContainer, cardAParent, cardBParent) {
     let otherContainer = cardId === 'active-card-a' ? cardBParent : cardAParent; // Get container of already placed card.
     let containerId = Number(otherContainer.split('-').reverse()[0]); // Grab id of already placed card.
-    let validContainers = [containerId - 5, containerId - 1, containerId + 1, containerId + 5]; // Create array of legal positions based on already placed card.
-    if (validContainers[2] % 5 === 0) validContainers.splice(2, 1); // Prevent placement of consecutive edge cards.
-    if ((validContainers[1] + 1) % 5 === 0) validContainers.splice(1, 1);
-    validContainers = validContainers.filter((n) => n >= 0 && n <= 24).map((item) => 'grid-droppable-' + item); // Remove OOB positions and format id.
+    let validContainers = [containerId - 4, containerId - 1, containerId + 1, containerId + 4]; // Create array of legal positions based on already placed card.
+    if (validContainers[2] % 4 === 0) validContainers.splice(2, 1); // Prevent placement of consecutive edge cards.
+    if ((validContainers[1] + 1) % 4 === 0) validContainers.splice(1, 1);
+    validContainers = validContainers.filter((n) => n >= 0 && n <= 15).map((item) => 'grid-droppable-' + item); // Remove OOB positions and format id.
     return validContainers.includes(currentContainer) ? true : false; // Return true if desired move is cardinal to other card.
 }
 

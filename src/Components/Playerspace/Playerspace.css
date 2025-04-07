@@ -1,8 +1,8 @@
-:root {
+/* :root {
     --grid-size: 256px;
     --playerspace-buttons-width: 32px;
     --playerspace-size: 128px;
-    --border-size: 1.5px;
+    --border-size: calc(0.3px * var(--size));
     --card-size: 50px;
     --scorebug-margin-size: 4.5px;
     --scorebug-font-size: 10px;
@@ -15,7 +15,7 @@
     --stack-offset-a: -43px;
     --stack-offset-b: -36px;
     --stack-offset-c: -29px;
-}
+} */
 
 .playerspace-container {
     width: var(--grid-size);
@@ -79,7 +79,7 @@
 }
 
 .current-mult {
-    letter-spacing: 20%;
+    letter-spacing: 15%;
     text-align: center;
     font-size: var(--scorebug-mult-font-size);
     color: #9C9C9C;
@@ -152,12 +152,12 @@
     height: var(--legend-size);
     flex-grow: 1;
 }
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
     :root {
         --grid-size: 512px;
         --playerspace-buttons-width: 64px;
         --playerspace-size: 256px;
-        --border-size: 3px;
+        --border-size: calc(0.6px * var(--size));
         --card-size: 100px;
         --scorebug-margin-size: 9px;
         --scorebug-font-size: 20px;
@@ -172,4 +172,4 @@
         --stack-offset-b: -72px;
         --stack-offset-c: -58px;    
     }
-  }
+  } */

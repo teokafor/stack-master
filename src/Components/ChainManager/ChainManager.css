@@ -1,7 +1,7 @@
-:root {
+/* :root {
     --card-size: 50px;
     --font-size: 8px;
-}
+} */
 
 .chain-manager {
     position: relative;
@@ -35,9 +35,9 @@
     }
 }
 
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
     :root {
         --card-size: 100px;
         --font-size: 16px;
     }
-  }
+  } */

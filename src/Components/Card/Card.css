@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --card-back-size: 44px;
     --card-border-size: 4px;
     --card-size: 50px;
@@ -6,14 +6,11 @@
     --mult-font-size: 6px;
     --active-border-size: 1.5px;
     --angle: 45deg;
-    --border-size: 0.3rem;
-
-    /* Probably revisit these ones later down the line */
     --s-mult-top-margin: 1px 0 0 3px;
     --s-mult-bot-bot: 12.5px;
     --s-mult-bot-left: 35px;
     --s-mult-bot-width: 10px; 
-}
+} */
 
 .card-base-state {
     background-color: #FFFFFF;
@@ -128,8 +125,7 @@
     width: var(--card-size);
 }
 
-
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
     :root {
         --card-back-size: 88px;
         --card-border-size: 8px;
@@ -138,10 +134,9 @@
         --mult-font-size: 12px;
         --active-border-size: 3px;
 
-        /* Probably revisit these ones later down the line */
         --s-mult-top-margin: 2px 0 0 6px;
         --s-mult-bot-bot: 25px;
         --s-mult-bot-left: 70px;
         --s-mult-bot-width: 20px; 
     }
-  }
+  } */
