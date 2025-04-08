@@ -4,7 +4,6 @@ export function drawHand() {
     let poolA = ['diamond', 'hexagon'];
     let poolB = ['circle'];
     let poolC = ['triangle', 'pentagon'];
-
     let poolD = ['hexagon_hollow', 'diamond_hollow'];
 
     let poolType = null;
@@ -12,7 +11,7 @@ export function drawHand() {
 
     
     // Oops! All Triangles
-    // let poolC = ['triangle', 'triangle']; 
+    // let poolD = ['triangle', 'triangle']; 
     // pool = 99;
 
 
@@ -22,10 +21,10 @@ export function drawHand() {
     else if (pool > 85) poolType = 'd';
 
     switch (poolType) {
-        case 'a': return {shape: poolA[Math.floor(Math.random(1,2) * 2)], mult: 4};
-        case 'b': return {shape: poolB[0], mult: 0};
-        case 'c': return {shape: poolC[Math.floor(Math.random(1,2) * 2)], mult: 2};
-        case 'd': return {shape: poolD[Math.floor(Math.random(1, 2) * 2)], mult: 6}
+        case 'a': return {shape: poolA[Math.floor(Math.random(1,2) * 2)], mult: 4, isDrawn: false};
+        case 'b': return {shape: poolB[0], mult: 0, isDrawn: false};
+        case 'c': return {shape: poolC[Math.floor(Math.random(1,2) * 2)], mult: 2, isDrawn: false};
+        case 'd': return {shape: poolD[Math.floor(Math.random(1, 2) * 2)], mult: 6, isDrawn: false}
     }
 
     // True random:

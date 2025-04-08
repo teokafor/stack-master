@@ -4,6 +4,7 @@ import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { drawHand } from '../../Functions/DrawHand.js';
 import { generateBlackouts } from '../../Functions/Blackout.js';
 import { checkCardinality, checkShapes, checkColor, calculateScore } from '../../Functions/Rules.js';
+import { isGameOver } from '../../Functions/GameOver.js';
 // Components
 import { Draggable } from '../Draggable/Draggable.jsx';
 import { Card } from '../Card/Card.jsx';
@@ -18,9 +19,15 @@ import '../Grid/Grid.css';
 import '../ChainManager/ChainManager.css';
 import '../Help/Help.css'
 
+import  '/triangle_r.svg';
+import  '/triangle_b.svg';
+import  '/hexagon_r.svg';
+import  '/hexagon_b.svg';
+
+
 const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
 const CHAIN_LIMIT = 5;
-const GRID_LENGTH = 16;
+const GRID_SIZE = 16;
 
 function App() {
   // General management
@@ -52,7 +59,7 @@ function App() {
     setAType(drawHand());
     setBType(drawHand());
 
-    const containers = Array.apply(null, Array(GRID_LENGTH)).map(function (x, i) { return 'grid-droppable-' + i; });
+    const containers = Array.apply(null, Array(GRID_SIZE)).map(function (x, i) { return 'grid-droppable-' + i; });
     let newGrid = {};
     for (const key of containers) newGrid[key] = '';
     setGrid(newGrid);
@@ -62,7 +69,7 @@ function App() {
 
   // Run when turn is over
   useEffect(() => {
-    if (!isDraggable) {
+    if (!isDraggable) {      
       // Only store card to grid if grid cell is already empty. 
       let newStoreA = (grid[cardAParent] === '') ? <Card type={aType} color={'b'} isPlaced={true} isCleared={false} /> : <Card type={aType} color={'b'} isCleared={true} />;
       let newStoreB = (grid[cardBParent] === '') ? <Card type={bType} color={'r'} isPlaced={true} isCleared={false} /> : <Card type={bType} color={'r'} isCleared={true} />;
@@ -73,41 +80,52 @@ function App() {
       setChainA(!isDraggable && scoreA > 0 ? <ChainManager score={scoreA} roundMultiplier={roundMultiplier} id={cardAParent} /> : null);
       setChainB(!isDraggable && scoreB > 0 ? <ChainManager score={scoreB} roundMultiplier={roundMultiplier} id={cardBParent} /> : null);
 
+      // Check if the multiplier can increase
+      if (scoreA !== 0 || scoreB !== 0) {
+        if (roundMultiplier < CHAIN_LIMIT) setRoundMultiplier(cur => cur + 1);
+      } else {
+        setRoundMultiplier(1);
+      }
+
       // Set grid first, regardless of clear status. If any cards need to play an animation, they must be rendered first!
       setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
+
+      // Play generic card draw animation before actually drawing new cards.
+      setAType({isDrawn: true});
+      setBType({isDrawn: true});  
       
       // Wait out the duration of the animation (if any played), then conditionally clear the grid and re-render it.
       setTimeout(() => {
         if (isAClear) newStoreA = '';
         if (isBClear) newStoreB = '';
-        setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB });
+        setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB }); 
       }, 300);
 
       setIsDraggable(true);
 
       // Longer time allotted for score text
       setTimeout(() => {
+        setAType(drawHand());
+        setBType(drawHand()); 
+
         setScoreA(0);
         setScoreB(0);
         setChainA(null);
         setChainB(null);
-
-        // Check if the multiplier can increase
-        if (scoreA !== 0 || scoreB !== 0) {
-          if (roundMultiplier < CHAIN_LIMIT) setRoundMultiplier(cur => cur + 1);
-        } else {
-          setRoundMultiplier(1);
-        }
       }, 950);
 
       setRoundScore(cur => cur + (scoreA + scoreB) * roundMultiplier);
-      setAType(drawHand());
-      setBType(drawHand());
       setCardAParent(null);
       setCardBParent(null);
       setDragOverlayDuration(DRAG_OVERLAY_DURATION);
     }
   }, [isDraggable]);
+
+
+  // Check for game over
+  useEffect(() => {
+    isGameOver(aType, bType, grid, blackouts);
+  }, [aType]);
 
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} color={'b'} /> : <Card isSelected={false} isOnBoard={cardAParent !== null ? true : false} type={aType} color={'b'} />}</Draggable>
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} type={bType} color={'r'} /> : <Card isSelected={false} isOnBoard={cardBParent !== null ? true : false} type={bType} color={'r'} />}</Draggable>
