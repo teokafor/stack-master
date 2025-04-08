@@ -1,66 +1,57 @@
+let validSpaces = 0;
+
+const validMatches = {
+    'diamond': ['diamond', 'triangle'],
+    'triangle': ['diamond', 'triangle', 'circle'],
+    'circle': ['triangle', 'circle', 'pentagon'],
+    'pentagon': ['circle', 'pentagon', 'hexagon'],
+    'hexagon': ['pentagon', 'hexagon'],
+    'hexagon_hollow': ['hexagon_hollow'],
+    'diamond_hollow': ['diamond_hollow']
+};
+
 export function isGameOver(aType, bType, grid, blackouts) {
+    validSpaces = 0;
 
-    // console.log(grid);
-    // console.log(blackouts);
-    /*
+    // Blackout spaces as numbers
+    const truncatedBlackouts = blackouts.filter((str) => str.includes('blackout')).map((item) => Number(item.split('-').reverse()[0]));
 
-    16 possible spaces:
-    Take card A:
-        eliminate blackout tiles (-5 possible spaces)
-        eliminate black tiles (-n possible tiles)
-
-        foreach valid space:
-            "place" red card in 4 possible spaces.
-
-    I don't think we'd need a second algo for card B?
-    If we exhaust every possible space for card A, then there's no point in checking card B.
-
-
-
-    typeA, typeB, grid, blackouts
-
-    iterate through grid (item, ind, arr)
-        
-        if grid item === "" && not blackout >> this tile is clear, move to check adjacents.
-
-
-        if item !== ""
-            if item.props.color === 'r'
-                if validShapes[item.props.type.shape].includes(typeA.shape)
-                    check -4, -1, +1, & +4 for emptiness,color,shape
-
-    */
-    const validMatches = {
-        'diamond': ['diamond', 'triangle'],
-        'triangle': ['diamond', 'triangle', 'circle'],
-        'circle': ['triangle', 'circle', 'pentagon'],
-        'pentagon': ['circle', 'pentagon', 'hexagon'],
-        'hexagon': ['pentagon', 'hexagon'],
-        'hexagon_hollow': ['hexagon_hollow'],
-        'diamond_hollow': ['diamond_hollow']
-    };
-
-    if (aType && bType) {
-        if (!aType.isDrawn && !bType.isDrawn) {
-            for (let item in grid) {
-                if (grid[item] === "" && blackouts.includes(item)) {
-                    console.log(`${item} is empty`);
-                    continue;
-                }
-        
-                if (blackouts.includes(item)) {
-                    if (grid[item] !== "") {
-                        if (grid[item].props.color === 'r') {
-                            if (!grid[item].props.isCleared) {
-                                if (validMatches[aType.shape].includes(grid[item].props.type.shape)) console.log(`Can place at ${item}`)
-                            }
-                        }
-                    }
+    if (aType && bType && !aType.isDrawn && !bType.isDrawn) { 
+        for (let cell in grid) {
+            if (blackouts.includes(cell)) {
+                if (grid[cell] === "") {
+                    canPlaceRedInAdjacent(cell, truncatedBlackouts, grid, bType);
+                } else if (grid[cell].props.color === 'r' && !grid[cell].props.isCleared &&
+                           validMatches[aType.shape].includes(grid[cell].props.type.shape)) {
+                    canPlaceRedInAdjacent(cell, truncatedBlackouts, grid, bType);
                 }
             }
         }
+        console.log(`game over check done. ${validSpaces} left.`);
+        if (validSpaces === 0) console.log('game over!');
     }
-    
+}
 
+function canPlaceRedInAdjacent(cell, truncatedBlackouts, grid, bType) {
+    const containerId = Number(cell.split('-').reverse()[0]);
+    let validContainers = [containerId - 4, containerId - 1, containerId + 1, containerId + 4];
+    if (validContainers[2] % 4 === 0) validContainers.splice(2, 1);
+    if ((validContainers[1] + 1) % 4 === 0) validContainers.splice(1, 1);
+    validContainers = validContainers
+    .filter((n) => n >= 0 && n <= 15)
+    .filter((n) => !truncatedBlackouts.includes(n))
+    .map((item) => 'grid-droppable-' + item);
 
+    for (let cell of validContainers) {
+        if (grid[cell] === "") {
+            validSpaces += 1;
+            continue;
+        }
+
+        if (grid[cell].props.color === 'b') {
+            if (validMatches[bType.shape].includes(grid[cell].props.type.shape)) {
+                validSpaces += 1;
+            }
+        }
+    }
 }

@@ -130,7 +130,6 @@ function App() {
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} color={'b'} /> : <Card isSelected={false} isOnBoard={cardAParent !== null ? true : false} type={aType} color={'b'} />}</Draggable>
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} type={bType} color={'r'} /> : <Card isSelected={false} isOnBoard={cardBParent !== null ? true : false} type={bType} color={'r'} />}</Draggable>
 
-
   return (
     <DndContext autoScroll={false} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
