@@ -30,7 +30,6 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
           {isShowingHelp ? helpScreen : null}
           <div className='playerspace-buttons'>
             <button className='help-button' onClick={showHelp}></button>
-            <button className='sound-button'></button>
           </div>
           <div className='playerspace'>
             <div className='scorebug'>

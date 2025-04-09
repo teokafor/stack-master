@@ -31,7 +31,7 @@
     flex-direction: column;
     align-items: center;
     gap: var(--gap-size);
-    padding-top: var(--gap-size);
+    padding-top: calc(var(--gap-size) / 2);
 }
 
 .playerspace-buttons > button {
