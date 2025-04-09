@@ -1,3 +1,5 @@
+import './ChainManager.css';
+
 export function ChainManager({score, roundMultiplier, id}) {
     return (
         <div className='chain-manager'>

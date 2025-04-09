@@ -1,3 +1,5 @@
+import './GameOver.css';
+
 export function GameOver({func, isNewHighScore}) {
     return (
         <div className='game-over-screen'>
@@ -22,5 +24,3 @@ export function GameOver({func, isNewHighScore}) {
         </div>
     );
 }
-
-// NEW HIGH SCORE

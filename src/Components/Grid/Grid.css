@@ -1,9 +1,3 @@
-/* :root {
-    --grid-size: 256px;
-    --border-size: calc(0.3px * var(--size));
-    --card-size: 50px;
-} */
-
 .grid-container {
     width: var(--grid-size);
     height: var(--grid-size);
@@ -39,11 +33,3 @@
 [id*='blackout'] {
     background-color: #333333;
 }
-
-/* @media screen and (min-width: 1024px) {
-    :root {
-        --grid-size: 512px;
-        --border-size: 3px;
-        --card-size: 100px;
-    }
-  } */

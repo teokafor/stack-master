@@ -2,6 +2,8 @@ import { useState } from "react";
 import { DummyCard } from "../Card/Card";
 import { Help } from "../Help/Help";
 
+import './Playerspace.css';
+
 export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, mult, highScore}) {
     const [isShowingHelp, setIsShowingHelp] = useState(false);
 

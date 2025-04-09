@@ -13,12 +13,6 @@ import { Grid } from '../Grid/Grid.jsx';
 import { ChainManager } from '../ChainManager/ChainManager.jsx';
 // Styles
 import './App.css';
-import '../Card/Card.css';
-import '../Playerspace/Playerspace.css';
-import '../Grid/Grid.css';
-import '../ChainManager/ChainManager.css';
-import '../Help/Help.css'
-import '../GameOver/GameOver.css'
 
 const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
 const CHAIN_LIMIT = 5;

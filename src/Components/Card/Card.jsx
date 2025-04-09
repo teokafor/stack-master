@@ -1,3 +1,5 @@
+import './Card.css';
+
 export function Card({isDragging, isSelected, isPlaced, isCleared, isOnBoard, type, color}) {
     // Not sure why null objects are passed first (StrictMode?) 
     // Either way, a more solid workaround should be implemented.

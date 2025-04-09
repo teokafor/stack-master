@@ -1,5 +1,6 @@
-export function Help({func}) {
+import './Help.css';
 
+export function Help({func}) {
     return (
         <div className='help-screen'>
             <div className='header-text'>HOW TO PLAY</div>

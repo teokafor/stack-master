@@ -2,6 +2,8 @@ import { GridCell } from '../GridCell/GridCell';
 import { GameOver } from '../GameOver/GameOver';
 import { GameError } from '../GameError/GameError';
 
+import './Grid.css';
+
 export function Grid({cardAParent, cardBParent, cardA, cardB, grid, containers, chainToastA, chainToastB, isGameOver, resetFunc, isNewHighScore, errorMsg}) {    
 
     if (chainToastA === null) chainToastA = {'props': {id: 'pass'}};

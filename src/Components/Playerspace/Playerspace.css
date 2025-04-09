@@ -1,22 +1,3 @@
-/* :root {
-    --grid-size: 256px;
-    --playerspace-buttons-width: 32px;
-    --playerspace-size: 128px;
-    --border-size: calc(0.3px * var(--size));
-    --card-size: 50px;
-    --scorebug-margin-size: 4.5px;
-    --scorebug-font-size: 10px;
-    --scorebug-mult-font-size: 8px;
-    --scorebug-mult-margin-top: -2.5px;
-    --scorebug-mult-margin-bot: 12.5px;
-    --gap-size: 16px;
-    --legend-size: 60px;
-    --s-pile-size: 80px;
-    --stack-offset-a: -43px;
-    --stack-offset-b: -36px;
-    --stack-offset-c: -29px;
-} */
-
 .playerspace-container {
     width: var(--grid-size);
     height: var(--grid-size);
@@ -152,24 +133,3 @@
     height: var(--legend-size);
     flex-grow: 1;
 }
-/* @media screen and (min-width: 1024px) {
-    :root {
-        --grid-size: 512px;
-        --playerspace-buttons-width: 64px;
-        --playerspace-size: 256px;
-        --border-size: calc(0.6px * var(--size));
-        --card-size: 100px;
-        --scorebug-margin-size: 9px;
-        --scorebug-font-size: 20px;
-        --scorebug-mult-font-size: 16px;
-        --scorebug-mult-margin-top: -5px;
-        --scorebug-mult-margin-bot: 25px;
-        --gap-size: 32px;
-        --legend-size: 120px;
-        --s-pile-size: 160px;
-    
-        --stack-offset-a: -86px;
-        --stack-offset-b: -72px;
-        --stack-offset-c: -58px;    
-    }
-  } */
