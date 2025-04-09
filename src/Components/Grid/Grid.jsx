@@ -12,8 +12,6 @@ export function Grid({cardAParent, cardBParent, cardA, cardB, grid, containers, 
     const gameOverScreen = <GameOver func={resetFunc} isNewHighScore={isNewHighScore} />;
     const gameError = <GameError msg={errorMsg} />
 
-    console.log(errorMsg);
-
     let keyArr = Object.keys(grid);    
     return (
         <div className='grid-container'>

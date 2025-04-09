@@ -27,13 +27,8 @@ export function checkForGameOver(aType, bType, grid, blackouts) {
                 }
             }
         }
-        console.log(`game over check done. ${validSpaces} left.`);
-        if (validSpaces === 0) {
-            console.log('game over!');
-            return true;
-        } else {
-            return false;
-        }
+        if (validSpaces === 0) return true;
+        else return false;
     }
 }
 

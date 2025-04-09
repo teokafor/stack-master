@@ -207,7 +207,6 @@ function App() {
       if (!isALegal || !isBLegal) setErrorMsg('card color must match');
     }
 
-
     // Granted the desired move passes all checks, calculate score:
     if (isALegal && cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id, cardA, cardB, grid, setScoreA, setScoreB);
     else if (isBLegal && cardId === 'active-card-b') isBLegal = calculateScore(cardId, over.id, cardA, cardB, grid, setScoreA, setScoreB);
