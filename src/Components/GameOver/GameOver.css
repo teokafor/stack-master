@@ -14,8 +14,6 @@
     width: var(--grid-size);
     height: var(--grid-size);
     position: absolute;
-    border: var(--border-size) solid rgba(245, 0, 0, 0.767);
-    border-radius: var(--card-border-size);
 
     box-sizing: border-box;
     z-index: 4;
@@ -38,7 +36,6 @@
 }
 
 
-/* letters should dance independently, left-to-right, then short pause, then right-to-left */
 .header-text {
     color: white;
     font-family: Tomorrow-Light;
@@ -59,7 +56,7 @@
     animation-name: dance;
     animation-duration: 1200ms;
     animation-iteration-count: infinite;
-    animation-direction: alternate-reverse;
+    animation-direction: alternate;
     animation-timing-function: cubic-bezier(0.5, 1, 0.89, 1);
 }
 

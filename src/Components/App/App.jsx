@@ -30,6 +30,7 @@ function App() {
   const [dragOverlayDuration, setDragOverlayDuration] = useState(DRAG_OVERLAY_DURATION);
   const [isDraggable, setIsDraggable] = useState(true);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   // Cards
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
@@ -53,12 +54,12 @@ function App() {
     setIsDraggable(false);
   }
 
+  // Run on browser load
   useEffect(() => {
     initGame();
   }, []);
 
   function initGame() {    
-    // TODO: setHighScore with data pulled from localStorage.
     setHighScore(localStorage.getItem('highScore') ? localStorage.getItem('highScore') : 0);
     setRoundScore(0);
     setRoundMultiplier(1);
@@ -128,8 +129,7 @@ function App() {
     }
   }, [isDraggable]);
 
-
-  // Check for game over
+  // Run when new cards are drawn
   useEffect(() => {
     if (checkForGameOver(aType, bType, grid, blackouts)) {
       setIsDraggable(false);
@@ -142,6 +142,13 @@ function App() {
     }
   }, [aType]);
 
+  // Run when the player makes an illegal move
+  useEffect(() => {
+    setTimeout(() => {
+      if (errorMsg !== '') setErrorMsg('');
+    }, 2400);
+  }, [errorMsg]);
+
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} color={'b'} /> : <Card isSelected={false} isOnBoard={cardAParent !== null ? true : false} type={aType} color={'b'} />}</Draggable>
   const cardB = <Draggable id='active-card-b' disabled={!isDraggable}>{activeId === 'active-card-b' ? <Card isSelected={true} type={bType} color={'r'} /> : <Card isSelected={false} isOnBoard={cardBParent !== null ? true : false} type={bType} color={'r'} />}</Draggable>
 
@@ -149,7 +156,7 @@ function App() {
     <DndContext autoScroll={false} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier} highScore={highScore} />
-        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} isGameOver={isGameOver} resetFunc={initGame} isNewHighScore={isNewHighScore}  />
+        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} isGameOver={isGameOver} resetFunc={initGame} isNewHighScore={isNewHighScore} errorMsg={errorMsg}  />
       </div>
 
       {/* Handle live movement of cards */}
@@ -173,24 +180,41 @@ function App() {
     let isBLegal = true;
 
     // skip checks if card was not placed on cell
-    if (over === null) {
+    if (over === null || over.id.includes('blackout')) {
       isALegal = false;
       isBLegal = false;
     }
 
+    // TODO: Ask the Oracle to clean this up.
+
     // Only enforce cardinality rule if other card has been placed.
-    if ((cardAParent !== null && cardId !== 'active-card-a') || (cardBParent !== null && cardId !== 'active-card-b')) {
-      if (cardId === 'active-card-a' && isALegal) isALegal = checkCardinality(cardId, over.id, cardAParent, cardBParent);
-      else if (cardId === 'active-card-b' && isBLegal) isBLegal = checkCardinality(cardId, over.id, cardAParent, cardBParent);
+    if (isALegal && isBLegal) {
+      if ((cardAParent !== null && cardId !== 'active-card-a') || (cardBParent !== null && cardId !== 'active-card-b')) {
+        if (cardId === 'active-card-a' && isALegal) {
+          if (!checkCardinality(cardId, over.id, cardAParent, cardBParent)) isALegal = false;
+        }
+        else if (cardId === 'active-card-b' && isBLegal) {
+          if (!checkCardinality(cardId, over.id, cardAParent, cardBParent)) isBLegal = false;
+        }
+        if (!isALegal || !isBLegal) setErrorMsg('card placement is not adjacent');
+      }
+    }
+    // Run shape check
+    if (isALegal && isBLegal) {
+      if (isALegal && cardId === 'active-card-a') isALegal = checkShapes(cardId, over.id, cardA, cardB, grid);
+      else if (isBLegal && cardId === 'active-card-b') isBLegal = checkShapes(cardId, over.id, cardA, cardB, grid);
+
+      if (!isALegal || !isBLegal) setErrorMsg('card type must match');
     }
 
-    // Run shape check
-    if (isALegal && cardId === 'active-card-a') isALegal = checkShapes(cardId, over.id, cardA, cardB, grid);
-    else if (isBLegal && cardId === 'active-card-b') isBLegal = checkShapes(cardId, over.id, cardA, cardB, grid);
-
     // Run color check 
-    if (isALegal && cardId === 'active-card-a') isALegal = checkColor(cardId, over.id, cardA, cardB, grid);
-    else if (isBLegal && cardId === 'active-card-b') isBLegal = checkColor(cardId, over.id, cardA, cardB, grid);
+    if (isALegal && isBLegal) {
+      if (isALegal && cardId === 'active-card-a') isALegal = checkColor(cardId, over.id, cardA, cardB, grid);
+      else if (isBLegal && cardId === 'active-card-b') isBLegal = checkColor(cardId, over.id, cardA, cardB, grid);
+
+      if (!isALegal || !isBLegal) setErrorMsg('card color must match');
+    }
+
 
     // Granted the desired move passes all checks, calculate score:
     if (isALegal && cardId === 'active-card-a') isALegal = calculateScore(cardId, over.id, cardA, cardB, grid, setScoreA, setScoreB);

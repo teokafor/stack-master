@@ -13,6 +13,7 @@
     background-color: #C6C6C6;
     border: var(--border-size) solid #C6C6C6;
     border-radius: var(--card-border-size);
+    justify-content: center;
 }
 
 .grid-bg {

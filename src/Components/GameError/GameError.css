@@ -1,0 +1,39 @@
+.game-error-body {
+    background-color: black;
+    width: calc(var(--grid-size) - var(--card-size) / 2);
+    height: calc(var(--card-size) / 2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-size);
+    position: absolute;
+
+    animation: toastIn 700ms 0ms forwards 1, toastOut 700ms 1700ms forwards 1;
+
+    opacity: 0;
+    z-index: 4;
+}
+
+.game-error-msg {
+    font-family: Tomorrow-Light;
+    text-align: center;
+    user-select: none;
+    color: white;
+    letter-spacing: 10%;
+    font-size: calc(var(--scorebug-font-size) * 1);
+}
+
+
+@keyframes toastIn {
+    to {
+        opacity: 1;
+        transform: translateY(calc(var(--card-size) / 2));
+    }
+}
+
+@keyframes toastOut {
+    to {
+        transform: translateY(calc(var(--card-size) / -2));
+        opacity: 0;
+    }
+}
