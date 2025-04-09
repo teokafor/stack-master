@@ -5,3 +5,12 @@ To setup, clone the repo and run:
 Then run
 
 > npm install @dnd-kit/core
+
+# Credits
+sfx (if any)
+
+dndkit
+
+fonts
+
+inspirations(?)
