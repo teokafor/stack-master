@@ -41,10 +41,12 @@ function App() {
   // Scoring
   const [scoreA, setScoreA] = useState(0);
   const [scoreB, setScoreB] = useState(0);
-  const [roundScore, setRoundScore] = useState(0);
   const [roundMultiplier, setRoundMultiplier] = useState(1);
   const [chainA, setChainA] = useState(null);
   const [chainB, setChainB] = useState(null);
+  const [roundScore, setRoundScore] = useState(0);
+  const [highScore, setHighScore] = useState();
+  const [isNewHighScore, setIsNewHighScore] = useState(false);
 
   if (cardAParent !== null && cardBParent !== null) if (isDraggable) {
     setDragOverlayDuration(0);
@@ -56,6 +58,8 @@ function App() {
   }, []);
 
   function initGame() {    
+    // TODO: setHighScore with data pulled from localStorage.
+    setHighScore(localStorage.getItem('highScore') ? localStorage.getItem('highScore') : 0);
     setRoundScore(0);
     setRoundMultiplier(1);
     setIsGameOver(false);
@@ -111,7 +115,6 @@ function App() {
         setBType(drawHand()); 
         setIsDraggable(true);
 
-
         setScoreA(0);
         setScoreB(0);
         setChainA(null);
@@ -131,6 +134,11 @@ function App() {
     if (checkForGameOver(aType, bType, grid, blackouts)) {
       setIsDraggable(false);
       setIsGameOver(true);
+
+      if (roundScore > highScore) {
+        localStorage.setItem("highScore", roundScore);
+        setIsNewHighScore(true);
+      }
     }
   }, [aType]);
 
@@ -140,10 +148,8 @@ function App() {
   return (
     <DndContext autoScroll={false} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
-        <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier}/>
-        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} isGameOver={isGameOver} resetFunc={initGame}   />
-        {/* We need to pass another prop to grid that serves as a callback function we can use when igo is true  
-            This function needs to */}
+        <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier} highScore={highScore} />
+        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} isGameOver={isGameOver} resetFunc={initGame} isNewHighScore={isNewHighScore}  />
       </div>
 
       {/* Handle live movement of cards */}

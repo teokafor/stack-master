@@ -1,12 +1,12 @@
 import { GridCell } from '../GridCell/GridCell';
 import { GameOver } from '../GameOver/GameOver';
 
-export function Grid({cardAParent, cardBParent, cardA, cardB, grid, containers, chainToastA, chainToastB, isGameOver, resetFunc}) {    
+export function Grid({cardAParent, cardBParent, cardA, cardB, grid, containers, chainToastA, chainToastB, isGameOver, resetFunc, isNewHighScore}) {    
 
     if (chainToastA === null) chainToastA = {'props': {id: 'pass'}};
     if (chainToastB === null) chainToastB = {'props': {id: 'pass'}};
 
-    const gameOverScreen = <GameOver func={resetFunc}/>;
+    const gameOverScreen = <GameOver func={resetFunc} isNewHighScore={isNewHighScore} />;
 
     console.log(isGameOver);
 

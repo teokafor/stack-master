@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DummyCard } from "../Card/Card";
 import { Help } from "../Help/Help";
 
-export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, mult}) {
+export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, mult, highScore}) {
     const [isShowingHelp, setIsShowingHelp] = useState(false);
 
     // Holds the space of the currently placed card 
@@ -10,14 +10,19 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
 
     const helpScreen = <Help func={showHelp} />;
 
-    let renderScore = '';
-    // Add leading 0s to score:
-    if (curScore <= 9) renderScore = '00' + curScore;
-    else if (curScore >= 10 && curScore <= 99) renderScore = '0' + curScore;
-    else renderScore = curScore;
 
     function showHelp() {
         setIsShowingHelp(cur => !cur);
+    }
+
+    function formatScore(raw) {
+      let renderScore = '';
+      // Add leading 0s to score:
+      if (raw <= 9) renderScore = '00' + raw;
+      else if (raw >= 10 && raw <= 99) renderScore = '0' + raw;
+      else renderScore = raw;  
+
+      return renderScore;
     }
 
     return (
@@ -29,8 +34,8 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
           </div>
           <div className='playerspace'>
             <div className='scorebug'>
-              <div className='current-score'>SCORE: {renderScore}</div>
-              <div className='high-score'>HIGH: 968</div>
+              <div className='current-score'>SCORE: {formatScore(curScore)}</div>
+              <div className='high-score'>HIGH: {formatScore(highScore)}</div>
             </div>
             <div className='current-mult'>MULTIPLIER BONUS: {mult}X</div>
             <div className='draw-pile-container'>
