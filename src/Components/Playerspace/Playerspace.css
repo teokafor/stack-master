@@ -126,7 +126,7 @@
 }
 
 .legend {
-    background-image: url('./legend.png');
+    background-image: url('./legend.svg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
