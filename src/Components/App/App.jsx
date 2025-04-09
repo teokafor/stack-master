@@ -105,12 +105,12 @@ function App() {
         setGrid({ ...grid, [cardAParent]: newStoreA, [cardBParent]: newStoreB }); 
       }, 300);
 
-      setIsDraggable(true);
-
       // Longer time allotted for score text
       setTimeout(() => {
         setAType(drawHand());
         setBType(drawHand()); 
+        setIsDraggable(true);
+
 
         setScoreA(0);
         setScoreB(0);
