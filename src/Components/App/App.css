@@ -34,12 +34,12 @@
 
 @font-face {
   font-family: 'Tomorrow-Light';
-  src: url('./font/Tomorrow-Light.ttf');
+  src: url('/font/Tomorrow-Light.ttf');
 }
 
 @font-face {
   font-family: 'Tomorrow-Regular';
-  src: url('./font/Tomorrow-Regular.ttf');
+  src: url('/font/Tomorrow-Regular.ttf');
 }
 
 .containers {

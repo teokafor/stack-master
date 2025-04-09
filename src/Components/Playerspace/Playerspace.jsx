@@ -12,7 +12,6 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
 
     const helpScreen = <Help func={showHelp} />;
 
-
     function showHelp() {
         setIsShowingHelp(cur => !cur);
     }
@@ -27,11 +26,16 @@ export function Playerspace({cardAParent, cardBParent, cardA, cardB, curScore, m
       return renderScore;
     }
 
+    function openGithub() {
+
+    }
+
     return (
         <div className='playerspace-container'>
           {isShowingHelp ? helpScreen : null}
           <div className='playerspace-buttons'>
             <button className='help-button' onClick={showHelp}></button>
+            <a className='gh-button' href='https://github.com/teokafor/stack-master' target='_blank'></a>
           </div>
           <div className='playerspace'>
             <div className='scorebug'>

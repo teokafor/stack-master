@@ -10,15 +10,17 @@
     width: var(--playerspace-buttons-width);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     gap: var(--gap-size);
     padding-top: calc(var(--gap-size) / 2);
+    padding-bottom: calc(var(--gap-size) / 2);
 }
 
-.playerspace-buttons > button {
+.playerspace-buttons > button, a {
     border-radius: 100px;
-    width: calc(var(--card-size) / 2);
-    height: calc(var(--card-size) / 2);
+    width: calc(var(--card-size) / 2.5);
+    height: calc(var(--card-size) / 2.5);
     background-position: center;
     background-repeat: no-repeat;
     background-size:contain;
@@ -32,17 +34,17 @@
 	outline: inherit;
 }
 
-.playerspace-buttons > button:hover {
+.playerspace-buttons > button:hover, a:hover{
     background-color: rgb(224, 224, 224);
     transition: background-color 200ms;
 }
 
 .help-button {
-    background-image: url('./help.svg');
+    background-image: url('/help.svg');
 }
 
-.sound-button {
-    background-image: url('./sfx.svg');
+.gh-button {
+    background-image: url('/gh_icon.svg');
 }
 
 .scorebug {
@@ -126,7 +128,7 @@
 }
 
 .legend {
-    background-image: url('./legend.svg');
+    background-image: url('/legend.svg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
