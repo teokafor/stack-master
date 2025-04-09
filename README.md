@@ -3,7 +3,7 @@ Stack Master is a React-based card game inspired by other games like Bejeweled, 
 
 ## Setup
 To setup, clone the repo and run:
-> npm create vite@latest untitled-card-game --
+> npm create vite@latest stack-master --
 
 Then run
 
