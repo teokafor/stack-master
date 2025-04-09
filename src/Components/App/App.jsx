@@ -4,7 +4,7 @@ import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { drawHand } from '../../Functions/DrawHand.js';
 import { generateBlackouts } from '../../Functions/Blackout.js';
 import { checkCardinality, checkShapes, checkColor, calculateScore } from '../../Functions/Rules.js';
-import { isGameOver } from '../../Functions/GameOver.js';
+import { checkForGameOver } from '../../Functions/GameOver.js';
 // Components
 import { Draggable } from '../Draggable/Draggable.jsx';
 import { Card } from '../Card/Card.jsx';
@@ -18,12 +18,7 @@ import '../Playerspace/Playerspace.css';
 import '../Grid/Grid.css';
 import '../ChainManager/ChainManager.css';
 import '../Help/Help.css'
-
-import  '/triangle_r.svg';
-import  '/triangle_b.svg';
-import  '/hexagon_r.svg';
-import  '/hexagon_b.svg';
-
+import '../GameOver/GameOver.css'
 
 const DRAG_OVERLAY_DURATION = 300; // Time in ms between drag end and animation end.
 const CHAIN_LIMIT = 5;
@@ -34,6 +29,7 @@ function App() {
   const [activeId, setActiveId] = useState(null);
   const [dragOverlayDuration, setDragOverlayDuration] = useState(DRAG_OVERLAY_DURATION);
   const [isDraggable, setIsDraggable] = useState(true);
+  const [isGameOver, setIsGameOver] = useState(false);
   // Cards
   const [cardAParent, setCardAParent] = useState(null);
   const [cardBParent, setCardBParent] = useState(null);
@@ -56,20 +52,28 @@ function App() {
   }
 
   useEffect(() => {
+    initGame();
+  }, []);
+
+  function initGame() {    
+    setRoundScore(0);
+    setRoundMultiplier(1);
+    setIsGameOver(false);
     setAType(drawHand());
     setBType(drawHand());
-
+    
     const containers = Array.apply(null, Array(GRID_SIZE)).map(function (x, i) { return 'grid-droppable-' + i; });
     let newGrid = {};
     for (const key of containers) newGrid[key] = '';
     setGrid(newGrid);
-
+    
     setBlackouts(generateBlackouts());
-  }, []);
+    setIsDraggable(true);
+  }
 
   // Run when turn is over
   useEffect(() => {
-    if (!isDraggable) {      
+    if (!isDraggable && !isGameOver) {      
       // Only store card to grid if grid cell is already empty. 
       let newStoreA = (grid[cardAParent] === '') ? <Card type={aType} color={'b'} isPlaced={true} isCleared={false} /> : <Card type={aType} color={'b'} isCleared={true} />;
       let newStoreB = (grid[cardBParent] === '') ? <Card type={bType} color={'r'} isPlaced={true} isCleared={false} /> : <Card type={bType} color={'r'} isCleared={true} />;
@@ -124,7 +128,10 @@ function App() {
 
   // Check for game over
   useEffect(() => {
-    isGameOver(aType, bType, grid, blackouts);
+    if (checkForGameOver(aType, bType, grid, blackouts)) {
+      setIsDraggable(false);
+      setIsGameOver(true);
+    }
   }, [aType]);
 
   const cardA = <Draggable id='active-card-a' disabled={!isDraggable}>{activeId === 'active-card-a' ? <Card isSelected={true} type={aType} color={'b'} /> : <Card isSelected={false} isOnBoard={cardAParent !== null ? true : false} type={aType} color={'b'} />}</Draggable>
@@ -134,7 +141,9 @@ function App() {
     <DndContext autoScroll={false} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className='containers'>
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier}/>
-        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} />
+        <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} isGameOver={isGameOver} resetFunc={initGame}   />
+        {/* We need to pass another prop to grid that serves as a callback function we can use when igo is true  
+            This function needs to */}
       </div>
 
       {/* Handle live movement of cards */}

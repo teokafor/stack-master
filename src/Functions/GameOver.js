@@ -10,7 +10,7 @@ const validMatches = {
     'diamond_hollow': ['diamond_hollow']
 };
 
-export function isGameOver(aType, bType, grid, blackouts) {
+export function checkForGameOver(aType, bType, grid, blackouts) {
     validSpaces = 0;
 
     // Blackout spaces as numbers
@@ -28,7 +28,12 @@ export function isGameOver(aType, bType, grid, blackouts) {
             }
         }
         console.log(`game over check done. ${validSpaces} left.`);
-        if (validSpaces === 0) console.log('game over!');
+        if (validSpaces === 0) {
+            console.log('game over!');
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
