@@ -179,8 +179,6 @@ function App() {
       isBLegal = false;
     }
 
-    // TODO: Ask the Oracle to clean this up.
-
     // Only enforce cardinality rule if other card has been placed.
     if (isALegal && isBLegal) {
       if ((cardAParent !== null && cardId !== 'active-card-a') || (cardBParent !== null && cardId !== 'active-card-b')) {
