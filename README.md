@@ -12,4 +12,4 @@ Then run
 ## Credits
 [dnd kit](https://github.com/clauderic/dnd-kit): MIT License. Copyright (c) 2021 Claudéric Demers.
 
-[Tomorrow Font](github.com/MonicaRizzolli/Tomorrow): Licensed under the SIL Open Font License. Copyright (c) 2019 Tony de Marco, Monica Rizzolli.
+[Tomorrow Font](https://github.com/MonicaRizzolli/Tomorrow): Licensed under the SIL Open Font License. Copyright (c) 2019 Tony de Marco, Monica Rizzolli.
