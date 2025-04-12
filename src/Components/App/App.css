@@ -42,6 +42,16 @@
   src: url('/font/Tomorrow-Regular.ttf');
 }
 
+.game-title {
+  color: black;
+  margin-bottom: 10px;
+  font-family: Tomorrow-Regular;
+  font-size: calc(var(--font-size) * 3);
+  display: flex;
+  justify-content: center;
+  letter-spacing: 10%;
+}
+
 .containers {
   display: flex;
   justify-content: center;

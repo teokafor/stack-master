@@ -148,6 +148,7 @@ function App() {
 
   return (
     <DndContext autoScroll={false} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <div className='game-title'>STACK MASTER</div>
       <div className='containers'>
         <Playerspace cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} curScore={roundScore} mult={roundMultiplier} highScore={highScore} />
         <Grid cardAParent={cardAParent} cardBParent={cardBParent} cardA={cardA} cardB={cardB} grid={grid} containers={blackouts} chainToastA={chainA} chainToastB={chainB} isGameOver={isGameOver} resetFunc={initGame} isNewHighScore={isNewHighScore} errorMsg={errorMsg}  />
